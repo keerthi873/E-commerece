@@ -4,6 +4,9 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Two-colour system: brand blue + brand yellow, on neutral paper/ink. */
+
+
 /*
  * Design system definition.
  *
@@ -62,9 +65,13 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.25rem;
+  --brand: oklch(0.52 0.22 262);
+  --brand-deep: oklch(0.36 0.17 264);
+  --accent-yellow: oklch(0.91 0.17 96);
+  --background: oklch(0.97 0.002 264);
+  --foreground: oklch(0.22 0.02 264);
+
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
