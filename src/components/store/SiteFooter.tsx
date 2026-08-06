@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 const columns = [
   { title: "About", links: ["Contact Us", "About Us", "Careers", "Press"] },
   { title: "Help", links: ["Payments", "Shipping", "Cancellation", "Returns"] },
@@ -17,9 +19,14 @@ export function SiteFooter() {
             <ul className="mt-4 space-y-2.5 text-sm opacity-85">
               {col.links.map((l) => (
                 <li key={l}>
-                  <a href="/" className="hover:underline">
+                  <button
+                    onClick={() =>
+                      toast(l, { description: "This page is coming soon on Kartly." })
+                    }
+                    className="hover:underline"
+                  >
                     {l}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
