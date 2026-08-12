@@ -4,8 +4,11 @@ import { ProductCard } from "@/components/store/ProductCard";
 import { SiteFooter } from "@/components/store/SiteFooter";
 import { SiteHeader } from "@/components/store/SiteHeader";
 import { CartPanel } from "@/components/store/CartPanel";
+import { ForYouSection } from "@/components/store/ForYouSection";
+import { FashionSection } from "@/components/store/FashionSection";
+import { ChatBot } from "@/components/store/ChatBot";
+import { HeroCarousel } from "@/components/store/HeroCarousel";
 import { StoreProvider, useStore } from "@/components/store/store-context";
-import bannerHero from "@/assets/banner-hero.jpg";
 import bannerAudio from "@/assets/banner-audio.jpg";
 
 export const Route = createFileRoute("/")({
@@ -43,6 +46,7 @@ function HomeRoute() {
     <StoreProvider>
       <Home />
       <CartPanel />
+      <ChatBot />
     </StoreProvider>
   );
 }
@@ -64,38 +68,7 @@ function Home() {
 
         <section className="mx-auto max-w-[1400px] px-4 pt-4">
           <div className="grid gap-3 lg:grid-cols-[2fr_1fr]">
-            <div className="relative overflow-hidden bg-brand-deep">
-              <img
-                src={bannerHero}
-                alt="Freedom Sale on flagship smartphones"
-                width={1600}
-                height={640}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 flex flex-col justify-center gap-3 p-6 sm:p-10">
-                <p className="w-fit bg-accent px-2 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-accent-foreground">
-                  Freedom Sale
-                </p>
-                <p className="max-w-xs text-2xl font-bold leading-tight text-primary-foreground sm:text-4xl">
-                  Flagship phones at launch prices
-                </p>
-                <p className="text-sm text-primary-foreground/80">
-                  Extra 10% off on bank cards · Starts 8<sup>th</sup> Aug
-                </p>
-                <button
-                  onClick={() => {
-                    setCategory("Mobiles");
-                    toast.success("We'll notify you", {
-                      description: "Mobile deals are now showing below.",
-                    });
-                    jumpToDeals();
-                  }}
-                  className="w-fit bg-accent px-5 py-2.5 text-sm font-bold text-accent-foreground transition-opacity hover:opacity-90"
-                >
-                  Notify me
-                </button>
-              </div>
-            </div>
+            <HeroCarousel />
 
             <button
               onClick={() => {
@@ -141,6 +114,9 @@ function Home() {
             ))}
           </ul>
         </section>
+
+        {/* "For You" Section (Trending Picks, Recently Viewed, Recommended) */}
+        <ForYouSection />
 
         <section id="deals" className="mx-auto max-w-[1400px] scroll-mt-32 px-4 py-8">
           <div className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-brand pb-3">
