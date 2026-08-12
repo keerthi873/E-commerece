@@ -22,6 +22,8 @@ type StoreState = {
   setCartOpen: (v: boolean) => void;
   wishlist: string[];
   toggleWishlist: (p: Product) => void;
+  recentlyViewed: string[];
+  addRecentlyViewed: (id: string) => void;
   user: string | null;
   signIn: (phone: string) => void;
   signOut: () => void;
@@ -46,6 +48,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = React.useState<CartLine[]>([]);
   const [cartOpen, setCartOpen] = React.useState(false);
   const [wishlist, setWishlist] = React.useState<string[]>([]);
+  const [recentlyViewed, setRecentlyViewed] = React.useState<string[]>([]);
   const [user, setUser] = React.useState<string | null>(null);
   const [pincode, setPincode] = React.useState("560001");
 
@@ -55,6 +58,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setWishlist(read<string[]>("kartly.wishlist", []));
     setUser(read<string | null>("kartly.user", null));
     setPincode(read<string>("kartly.pincode", "560001"));
+    setRecentlyViewed(read<string[]>("kartly.recentlyViewed", []));
   }, []);
 
   React.useEffect(() => {
@@ -69,6 +73,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     window.localStorage.setItem("kartly.pincode", JSON.stringify(pincode));
   }, [pincode]);
+  React.useEffect(() => {
+    window.localStorage.setItem("kartly.recentlyViewed", JSON.stringify(recentlyViewed));
+  }, [recentlyViewed]);
+
+  const addRecentlyViewed = React.useCallback((id: string) => {
+    setRecentlyViewed((prev) => {
+      const filtered = prev.filter((itemId) => itemId !== id);
+      return [id, ...filtered].slice(0, 12);
+    });
+  }, []);
 
   const visibleProducts = React.useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -149,6 +163,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setCartOpen,
     wishlist,
     toggleWishlist,
+    recentlyViewed,
+    addRecentlyViewed,
     user,
     signIn,
     signOut,
