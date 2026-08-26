@@ -10,14 +10,120 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppliancesRouteImport } from './routes/appliances'
+import { Route as BeautyRouteImport } from './routes/beauty'
+import { Route as BooksRouteImport } from './routes/books'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ElectronicsRouteImport } from './routes/electronics'
 import { Route as FashionRouteImport } from './routes/fashion'
+import { Route as FurnitureRouteImport } from './routes/furniture'
+import { Route as GroceryRouteImport } from './routes/grocery'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as MobilesRouteImport } from './routes/mobiles'
+import { Route as OrderSuccessRouteImport } from './routes/order-success'
+import { Route as PaymentRouteImport } from './routes/payment'
+import { Route as PortalsRouteImport } from './routes/portals'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SportsRouteImport } from './routes/sports'
+import { Route as SuccessRouteImport } from './routes/success'
+import { Route as ToysRouteImport } from './routes/toys'
+import { Route as ToysGiftsRouteImport } from './routes/toys-gifts'
 import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AppliancesIndexRouteImport } from './routes/appliances.index'
+import { Route as AppliancesTypeRouteImport } from './routes/appliances.$type'
+import { Route as BeautyIndexRouteImport } from './routes/beauty.index'
+import { Route as BeautyTypeRouteImport } from './routes/beauty.$type'
+import { Route as BooksIndexRouteImport } from './routes/books.index'
+import { Route as BooksTypeRouteImport } from './routes/books.$type'
 import { Route as CategoryNameRouteImport } from './routes/category.$name'
+import { Route as CustomerDashboardRouteImport } from './routes/customer.dashboard'
+import { Route as CustomerLoginRouteImport } from './routes/customer.login'
+import { Route as DeliveryDashboardRouteImport } from './routes/delivery.dashboard'
+import { Route as DeliveryLoginRouteImport } from './routes/delivery.login'
+import { Route as ElectronicsIndexRouteImport } from './routes/electronics.index'
+import { Route as ElectronicsTypeRouteImport } from './routes/electronics.$type'
+import { Route as FashionIndexRouteImport } from './routes/fashion.index'
+import { Route as FashionTypeRouteImport } from './routes/fashion.$type'
+import { Route as FashionKidsRouteImport } from './routes/fashion.kids'
+import { Route as FashionMenRouteImport } from './routes/fashion.men'
+import { Route as FashionWomenRouteImport } from './routes/fashion.women'
+import { Route as FinanceDashboardRouteImport } from './routes/finance.dashboard'
+import { Route as FinanceLoginRouteImport } from './routes/finance.login'
+import { Route as GroceryIndexRouteImport } from './routes/grocery.index'
+import { Route as GroceryTypeRouteImport } from './routes/grocery.$type'
+import { Route as HomeIndexRouteImport } from './routes/home.index'
+import { Route as HomeTypeRouteImport } from './routes/home.$type'
+import { Route as MobilesIndexRouteImport } from './routes/mobiles.index'
+import { Route as MobilesTypeRouteImport } from './routes/mobiles.$type'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
+import { Route as SellerDashboardRouteImport } from './routes/seller.dashboard'
+import { Route as SellerLoginRouteImport } from './routes/seller.login'
+import { Route as SportsIndexRouteImport } from './routes/sports.index'
+import { Route as SportsTypeRouteImport } from './routes/sports.$type'
+import { Route as SuperAdminDashboardRouteImport } from './routes/super-admin.dashboard'
+import { Route as SuperAdminLoginRouteImport } from './routes/super-admin.login'
+import { Route as SupportDashboardRouteImport } from './routes/support.dashboard'
+import { Route as SupportLoginRouteImport } from './routes/support.login'
+import { Route as ToysGiftsIndexRouteImport } from './routes/toys-gifts.index'
+import { Route as ToysGiftsTypeRouteImport } from './routes/toys-gifts.$type'
+import { Route as ToysIndexRouteImport } from './routes/toys.index'
+import { Route as ToysTypeRouteImport } from './routes/toys.$type'
+import { Route as TrackIdRouteImport } from './routes/track.$id'
+import { Route as WarehouseDashboardRouteImport } from './routes/warehouse.dashboard'
+import { Route as WarehouseLoginRouteImport } from './routes/warehouse.login'
+import { Route as AppliancesBrandBrandRouteImport } from './routes/appliances.brand.$brand'
+import { Route as BeautyBrandBrandRouteImport } from './routes/beauty.brand.$brand'
+import { Route as BooksBrandBrandRouteImport } from './routes/books.brand.$brand'
+import { Route as ElectronicsBrandBrandRouteImport } from './routes/electronics.brand.$brand'
+import { Route as FashionKidsIndexRouteImport } from './routes/fashion.kids.index'
+import { Route as FashionKidsSectionRouteImport } from './routes/fashion.kids.$section'
+import { Route as FashionMenIndexRouteImport } from './routes/fashion.men.index'
+import { Route as FashionMenSectionRouteImport } from './routes/fashion.men.$section'
+import { Route as FashionWomenIndexRouteImport } from './routes/fashion.women.index'
+import { Route as FashionWomenSectionRouteImport } from './routes/fashion.women.$section'
+import { Route as GroceryBrandBrandRouteImport } from './routes/grocery.brand.$brand'
+import { Route as HomeBrandBrandRouteImport } from './routes/home.brand.$brand'
+import { Route as MobilesBrandBrandRouteImport } from './routes/mobiles.brand.$brand'
+import { Route as SportsBrandBrandRouteImport } from './routes/sports.brand.$brand'
+import { Route as ToysGiftsBrandBrandRouteImport } from './routes/toys-gifts.brand.$brand'
+import { Route as ToysBrandBrandRouteImport } from './routes/toys.brand.$brand'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppliancesRoute = AppliancesRouteImport.update({
+  id: '/appliances',
+  path: '/appliances',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BeautyRoute = BeautyRouteImport.update({
+  id: '/beauty',
+  path: '/beauty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BooksRoute = BooksRouteImport.update({
+  id: '/books',
+  path: '/books',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElectronicsRoute = ElectronicsRouteImport.update({
+  id: '/electronics',
+  path: '/electronics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FashionRoute = FashionRouteImport.update({
@@ -25,64 +131,887 @@ const FashionRoute = FashionRouteImport.update({
   path: '/fashion',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FurnitureRoute = FurnitureRouteImport.update({
+  id: '/furniture',
+  path: '/furniture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GroceryRoute = GroceryRouteImport.update({
+  id: '/grocery',
+  path: '/grocery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MobilesRoute = MobilesRouteImport.update({
+  id: '/mobiles',
+  path: '/mobiles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderSuccessRoute = OrderSuccessRouteImport.update({
+  id: '/order-success',
+  path: '/order-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentRoute = PaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalsRoute = PortalsRouteImport.update({
+  id: '/portals',
+  path: '/portals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SportsRoute = SportsRouteImport.update({
+  id: '/sports',
+  path: '/sports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuccessRoute = SuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToysRoute = ToysRouteImport.update({
+  id: '/toys',
+  path: '/toys',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToysGiftsRoute = ToysGiftsRouteImport.update({
+  id: '/toys-gifts',
+  path: '/toys-gifts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WishlistRoute = WishlistRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppliancesIndexRoute = AppliancesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppliancesRoute,
+} as any)
+const AppliancesTypeRoute = AppliancesTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => AppliancesRoute,
+} as any)
+const BeautyIndexRoute = BeautyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BeautyRoute,
+} as any)
+const BeautyTypeRoute = BeautyTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => BeautyRoute,
+} as any)
+const BooksIndexRoute = BooksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BooksRoute,
+} as any)
+const BooksTypeRoute = BooksTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => BooksRoute,
 } as any)
 const CategoryNameRoute = CategoryNameRouteImport.update({
   id: '/category/$name',
   path: '/category/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CustomerDashboardRoute = CustomerDashboardRouteImport.update({
+  id: '/customer/dashboard',
+  path: '/customer/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerLoginRoute = CustomerLoginRouteImport.update({
+  id: '/customer/login',
+  path: '/customer/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeliveryDashboardRoute = DeliveryDashboardRouteImport.update({
+  id: '/delivery/dashboard',
+  path: '/delivery/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeliveryLoginRoute = DeliveryLoginRouteImport.update({
+  id: '/delivery/login',
+  path: '/delivery/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElectronicsIndexRoute = ElectronicsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ElectronicsRoute,
+} as any)
+const ElectronicsTypeRoute = ElectronicsTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => ElectronicsRoute,
+} as any)
+const FashionIndexRoute = FashionIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FashionRoute,
+} as any)
+const FashionTypeRoute = FashionTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => FashionRoute,
+} as any)
+const FashionKidsRoute = FashionKidsRouteImport.update({
+  id: '/kids',
+  path: '/kids',
+  getParentRoute: () => FashionRoute,
+} as any)
+const FashionMenRoute = FashionMenRouteImport.update({
+  id: '/men',
+  path: '/men',
+  getParentRoute: () => FashionRoute,
+} as any)
+const FashionWomenRoute = FashionWomenRouteImport.update({
+  id: '/women',
+  path: '/women',
+  getParentRoute: () => FashionRoute,
+} as any)
+const FinanceDashboardRoute = FinanceDashboardRouteImport.update({
+  id: '/finance/dashboard',
+  path: '/finance/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceLoginRoute = FinanceLoginRouteImport.update({
+  id: '/finance/login',
+  path: '/finance/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GroceryIndexRoute = GroceryIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GroceryRoute,
+} as any)
+const GroceryTypeRoute = GroceryTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => GroceryRoute,
+} as any)
+const HomeIndexRoute = HomeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HomeRoute,
+} as any)
+const HomeTypeRoute = HomeTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => HomeRoute,
+} as any)
+const MobilesIndexRoute = MobilesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MobilesRoute,
+} as any)
+const MobilesTypeRoute = MobilesTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => MobilesRoute,
+} as any)
 const ProductIdRoute = ProductIdRouteImport.update({
   id: '/product/$id',
   path: '/product/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SellerDashboardRoute = SellerDashboardRouteImport.update({
+  id: '/seller/dashboard',
+  path: '/seller/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SellerLoginRoute = SellerLoginRouteImport.update({
+  id: '/seller/login',
+  path: '/seller/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SportsIndexRoute = SportsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SportsRoute,
+} as any)
+const SportsTypeRoute = SportsTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => SportsRoute,
+} as any)
+const SuperAdminDashboardRoute = SuperAdminDashboardRouteImport.update({
+  id: '/super-admin/dashboard',
+  path: '/super-admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuperAdminLoginRoute = SuperAdminLoginRouteImport.update({
+  id: '/super-admin/login',
+  path: '/super-admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportDashboardRoute = SupportDashboardRouteImport.update({
+  id: '/support/dashboard',
+  path: '/support/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportLoginRoute = SupportLoginRouteImport.update({
+  id: '/support/login',
+  path: '/support/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToysGiftsIndexRoute = ToysGiftsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ToysGiftsRoute,
+} as any)
+const ToysGiftsTypeRoute = ToysGiftsTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => ToysGiftsRoute,
+} as any)
+const ToysIndexRoute = ToysIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ToysRoute,
+} as any)
+const ToysTypeRoute = ToysTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => ToysRoute,
+} as any)
+const TrackIdRoute = TrackIdRouteImport.update({
+  id: '/track/$id',
+  path: '/track/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WarehouseDashboardRoute = WarehouseDashboardRouteImport.update({
+  id: '/warehouse/dashboard',
+  path: '/warehouse/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WarehouseLoginRoute = WarehouseLoginRouteImport.update({
+  id: '/warehouse/login',
+  path: '/warehouse/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppliancesBrandBrandRoute = AppliancesBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => AppliancesRoute,
+} as any)
+const BeautyBrandBrandRoute = BeautyBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => BeautyRoute,
+} as any)
+const BooksBrandBrandRoute = BooksBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => BooksRoute,
+} as any)
+const ElectronicsBrandBrandRoute = ElectronicsBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => ElectronicsRoute,
+} as any)
+const FashionKidsIndexRoute = FashionKidsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FashionKidsRoute,
+} as any)
+const FashionKidsSectionRoute = FashionKidsSectionRouteImport.update({
+  id: '/$section',
+  path: '/$section',
+  getParentRoute: () => FashionKidsRoute,
+} as any)
+const FashionMenIndexRoute = FashionMenIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FashionMenRoute,
+} as any)
+const FashionMenSectionRoute = FashionMenSectionRouteImport.update({
+  id: '/$section',
+  path: '/$section',
+  getParentRoute: () => FashionMenRoute,
+} as any)
+const FashionWomenIndexRoute = FashionWomenIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FashionWomenRoute,
+} as any)
+const FashionWomenSectionRoute = FashionWomenSectionRouteImport.update({
+  id: '/$section',
+  path: '/$section',
+  getParentRoute: () => FashionWomenRoute,
+} as any)
+const GroceryBrandBrandRoute = GroceryBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => GroceryRoute,
+} as any)
+const HomeBrandBrandRoute = HomeBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => HomeRoute,
+} as any)
+const MobilesBrandBrandRoute = MobilesBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => MobilesRoute,
+} as any)
+const SportsBrandBrandRoute = SportsBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => SportsRoute,
+} as any)
+const ToysGiftsBrandBrandRoute = ToysGiftsBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => ToysGiftsRoute,
+} as any)
+const ToysBrandBrandRoute = ToysBrandBrandRouteImport.update({
+  id: '/brand/$brand',
+  path: '/brand/$brand',
+  getParentRoute: () => ToysRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/fashion': typeof FashionRoute
+  '/appliances': typeof AppliancesRouteWithChildren
+  '/beauty': typeof BeautyRouteWithChildren
+  '/books': typeof BooksRouteWithChildren
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/electronics': typeof ElectronicsRouteWithChildren
+  '/fashion': typeof FashionRouteWithChildren
+  '/furniture': typeof FurnitureRoute
+  '/grocery': typeof GroceryRouteWithChildren
+  '/home': typeof HomeRouteWithChildren
+  '/mobiles': typeof MobilesRouteWithChildren
+  '/order-success': typeof OrderSuccessRoute
+  '/payment': typeof PaymentRoute
+  '/portals': typeof PortalsRoute
+  '/search': typeof SearchRoute
+  '/sports': typeof SportsRouteWithChildren
+  '/success': typeof SuccessRoute
+  '/toys': typeof ToysRouteWithChildren
+  '/toys-gifts': typeof ToysGiftsRouteWithChildren
   '/wishlist': typeof WishlistRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/appliances/$type': typeof AppliancesTypeRoute
+  '/beauty/$type': typeof BeautyTypeRoute
+  '/books/$type': typeof BooksTypeRoute
   '/category/$name': typeof CategoryNameRoute
+  '/customer/dashboard': typeof CustomerDashboardRoute
+  '/customer/login': typeof CustomerLoginRoute
+  '/delivery/dashboard': typeof DeliveryDashboardRoute
+  '/delivery/login': typeof DeliveryLoginRoute
+  '/electronics/$type': typeof ElectronicsTypeRoute
+  '/fashion/$type': typeof FashionTypeRoute
+  '/fashion/kids': typeof FashionKidsRouteWithChildren
+  '/fashion/men': typeof FashionMenRouteWithChildren
+  '/fashion/women': typeof FashionWomenRouteWithChildren
+  '/finance/dashboard': typeof FinanceDashboardRoute
+  '/finance/login': typeof FinanceLoginRoute
+  '/grocery/$type': typeof GroceryTypeRoute
+  '/home/$type': typeof HomeTypeRoute
+  '/mobiles/$type': typeof MobilesTypeRoute
   '/product/$id': typeof ProductIdRoute
+  '/seller/dashboard': typeof SellerDashboardRoute
+  '/seller/login': typeof SellerLoginRoute
+  '/sports/$type': typeof SportsTypeRoute
+  '/super-admin/dashboard': typeof SuperAdminDashboardRoute
+  '/super-admin/login': typeof SuperAdminLoginRoute
+  '/support/dashboard': typeof SupportDashboardRoute
+  '/support/login': typeof SupportLoginRoute
+  '/toys-gifts/$type': typeof ToysGiftsTypeRoute
+  '/toys/$type': typeof ToysTypeRoute
+  '/track/$id': typeof TrackIdRoute
+  '/warehouse/dashboard': typeof WarehouseDashboardRoute
+  '/warehouse/login': typeof WarehouseLoginRoute
+  '/appliances/': typeof AppliancesIndexRoute
+  '/beauty/': typeof BeautyIndexRoute
+  '/books/': typeof BooksIndexRoute
+  '/electronics/': typeof ElectronicsIndexRoute
+  '/fashion/': typeof FashionIndexRoute
+  '/grocery/': typeof GroceryIndexRoute
+  '/home/': typeof HomeIndexRoute
+  '/mobiles/': typeof MobilesIndexRoute
+  '/sports/': typeof SportsIndexRoute
+  '/toys-gifts/': typeof ToysGiftsIndexRoute
+  '/toys/': typeof ToysIndexRoute
+  '/appliances/brand/$brand': typeof AppliancesBrandBrandRoute
+  '/beauty/brand/$brand': typeof BeautyBrandBrandRoute
+  '/books/brand/$brand': typeof BooksBrandBrandRoute
+  '/electronics/brand/$brand': typeof ElectronicsBrandBrandRoute
+  '/fashion/kids/$section': typeof FashionKidsSectionRoute
+  '/fashion/men/$section': typeof FashionMenSectionRoute
+  '/fashion/women/$section': typeof FashionWomenSectionRoute
+  '/grocery/brand/$brand': typeof GroceryBrandBrandRoute
+  '/home/brand/$brand': typeof HomeBrandBrandRoute
+  '/mobiles/brand/$brand': typeof MobilesBrandBrandRoute
+  '/sports/brand/$brand': typeof SportsBrandBrandRoute
+  '/toys-gifts/brand/$brand': typeof ToysGiftsBrandBrandRoute
+  '/toys/brand/$brand': typeof ToysBrandBrandRoute
+  '/fashion/kids/': typeof FashionKidsIndexRoute
+  '/fashion/men/': typeof FashionMenIndexRoute
+  '/fashion/women/': typeof FashionWomenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/fashion': typeof FashionRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/furniture': typeof FurnitureRoute
+  '/order-success': typeof OrderSuccessRoute
+  '/payment': typeof PaymentRoute
+  '/portals': typeof PortalsRoute
+  '/search': typeof SearchRoute
+  '/success': typeof SuccessRoute
   '/wishlist': typeof WishlistRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/appliances/$type': typeof AppliancesTypeRoute
+  '/beauty/$type': typeof BeautyTypeRoute
+  '/books/$type': typeof BooksTypeRoute
   '/category/$name': typeof CategoryNameRoute
+  '/customer/dashboard': typeof CustomerDashboardRoute
+  '/customer/login': typeof CustomerLoginRoute
+  '/delivery/dashboard': typeof DeliveryDashboardRoute
+  '/delivery/login': typeof DeliveryLoginRoute
+  '/electronics/$type': typeof ElectronicsTypeRoute
+  '/fashion/$type': typeof FashionTypeRoute
+  '/finance/dashboard': typeof FinanceDashboardRoute
+  '/finance/login': typeof FinanceLoginRoute
+  '/grocery/$type': typeof GroceryTypeRoute
+  '/home/$type': typeof HomeTypeRoute
+  '/mobiles/$type': typeof MobilesTypeRoute
   '/product/$id': typeof ProductIdRoute
+  '/seller/dashboard': typeof SellerDashboardRoute
+  '/seller/login': typeof SellerLoginRoute
+  '/sports/$type': typeof SportsTypeRoute
+  '/super-admin/dashboard': typeof SuperAdminDashboardRoute
+  '/super-admin/login': typeof SuperAdminLoginRoute
+  '/support/dashboard': typeof SupportDashboardRoute
+  '/support/login': typeof SupportLoginRoute
+  '/toys-gifts/$type': typeof ToysGiftsTypeRoute
+  '/toys/$type': typeof ToysTypeRoute
+  '/track/$id': typeof TrackIdRoute
+  '/warehouse/dashboard': typeof WarehouseDashboardRoute
+  '/warehouse/login': typeof WarehouseLoginRoute
+  '/appliances': typeof AppliancesIndexRoute
+  '/beauty': typeof BeautyIndexRoute
+  '/books': typeof BooksIndexRoute
+  '/electronics': typeof ElectronicsIndexRoute
+  '/fashion': typeof FashionIndexRoute
+  '/grocery': typeof GroceryIndexRoute
+  '/home': typeof HomeIndexRoute
+  '/mobiles': typeof MobilesIndexRoute
+  '/sports': typeof SportsIndexRoute
+  '/toys-gifts': typeof ToysGiftsIndexRoute
+  '/toys': typeof ToysIndexRoute
+  '/appliances/brand/$brand': typeof AppliancesBrandBrandRoute
+  '/beauty/brand/$brand': typeof BeautyBrandBrandRoute
+  '/books/brand/$brand': typeof BooksBrandBrandRoute
+  '/electronics/brand/$brand': typeof ElectronicsBrandBrandRoute
+  '/fashion/kids/$section': typeof FashionKidsSectionRoute
+  '/fashion/men/$section': typeof FashionMenSectionRoute
+  '/fashion/women/$section': typeof FashionWomenSectionRoute
+  '/grocery/brand/$brand': typeof GroceryBrandBrandRoute
+  '/home/brand/$brand': typeof HomeBrandBrandRoute
+  '/mobiles/brand/$brand': typeof MobilesBrandBrandRoute
+  '/sports/brand/$brand': typeof SportsBrandBrandRoute
+  '/toys-gifts/brand/$brand': typeof ToysGiftsBrandBrandRoute
+  '/toys/brand/$brand': typeof ToysBrandBrandRoute
+  '/fashion/kids': typeof FashionKidsIndexRoute
+  '/fashion/men': typeof FashionMenIndexRoute
+  '/fashion/women': typeof FashionWomenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/fashion': typeof FashionRoute
+  '/appliances': typeof AppliancesRouteWithChildren
+  '/beauty': typeof BeautyRouteWithChildren
+  '/books': typeof BooksRouteWithChildren
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/electronics': typeof ElectronicsRouteWithChildren
+  '/fashion': typeof FashionRouteWithChildren
+  '/furniture': typeof FurnitureRoute
+  '/grocery': typeof GroceryRouteWithChildren
+  '/home': typeof HomeRouteWithChildren
+  '/mobiles': typeof MobilesRouteWithChildren
+  '/order-success': typeof OrderSuccessRoute
+  '/payment': typeof PaymentRoute
+  '/portals': typeof PortalsRoute
+  '/search': typeof SearchRoute
+  '/sports': typeof SportsRouteWithChildren
+  '/success': typeof SuccessRoute
+  '/toys': typeof ToysRouteWithChildren
+  '/toys-gifts': typeof ToysGiftsRouteWithChildren
   '/wishlist': typeof WishlistRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/appliances/$type': typeof AppliancesTypeRoute
+  '/beauty/$type': typeof BeautyTypeRoute
+  '/books/$type': typeof BooksTypeRoute
   '/category/$name': typeof CategoryNameRoute
+  '/customer/dashboard': typeof CustomerDashboardRoute
+  '/customer/login': typeof CustomerLoginRoute
+  '/delivery/dashboard': typeof DeliveryDashboardRoute
+  '/delivery/login': typeof DeliveryLoginRoute
+  '/electronics/$type': typeof ElectronicsTypeRoute
+  '/fashion/$type': typeof FashionTypeRoute
+  '/fashion/kids': typeof FashionKidsRouteWithChildren
+  '/fashion/men': typeof FashionMenRouteWithChildren
+  '/fashion/women': typeof FashionWomenRouteWithChildren
+  '/finance/dashboard': typeof FinanceDashboardRoute
+  '/finance/login': typeof FinanceLoginRoute
+  '/grocery/$type': typeof GroceryTypeRoute
+  '/home/$type': typeof HomeTypeRoute
+  '/mobiles/$type': typeof MobilesTypeRoute
   '/product/$id': typeof ProductIdRoute
+  '/seller/dashboard': typeof SellerDashboardRoute
+  '/seller/login': typeof SellerLoginRoute
+  '/sports/$type': typeof SportsTypeRoute
+  '/super-admin/dashboard': typeof SuperAdminDashboardRoute
+  '/super-admin/login': typeof SuperAdminLoginRoute
+  '/support/dashboard': typeof SupportDashboardRoute
+  '/support/login': typeof SupportLoginRoute
+  '/toys-gifts/$type': typeof ToysGiftsTypeRoute
+  '/toys/$type': typeof ToysTypeRoute
+  '/track/$id': typeof TrackIdRoute
+  '/warehouse/dashboard': typeof WarehouseDashboardRoute
+  '/warehouse/login': typeof WarehouseLoginRoute
+  '/appliances/': typeof AppliancesIndexRoute
+  '/beauty/': typeof BeautyIndexRoute
+  '/books/': typeof BooksIndexRoute
+  '/electronics/': typeof ElectronicsIndexRoute
+  '/fashion/': typeof FashionIndexRoute
+  '/grocery/': typeof GroceryIndexRoute
+  '/home/': typeof HomeIndexRoute
+  '/mobiles/': typeof MobilesIndexRoute
+  '/sports/': typeof SportsIndexRoute
+  '/toys-gifts/': typeof ToysGiftsIndexRoute
+  '/toys/': typeof ToysIndexRoute
+  '/appliances/brand/$brand': typeof AppliancesBrandBrandRoute
+  '/beauty/brand/$brand': typeof BeautyBrandBrandRoute
+  '/books/brand/$brand': typeof BooksBrandBrandRoute
+  '/electronics/brand/$brand': typeof ElectronicsBrandBrandRoute
+  '/fashion/kids/$section': typeof FashionKidsSectionRoute
+  '/fashion/men/$section': typeof FashionMenSectionRoute
+  '/fashion/women/$section': typeof FashionWomenSectionRoute
+  '/grocery/brand/$brand': typeof GroceryBrandBrandRoute
+  '/home/brand/$brand': typeof HomeBrandBrandRoute
+  '/mobiles/brand/$brand': typeof MobilesBrandBrandRoute
+  '/sports/brand/$brand': typeof SportsBrandBrandRoute
+  '/toys-gifts/brand/$brand': typeof ToysGiftsBrandBrandRoute
+  '/toys/brand/$brand': typeof ToysBrandBrandRoute
+  '/fashion/kids/': typeof FashionKidsIndexRoute
+  '/fashion/men/': typeof FashionMenIndexRoute
+  '/fashion/women/': typeof FashionWomenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fashion' | '/wishlist' | '/category/$name' | '/product/$id'
+  fullPaths:
+    | '/'
+    | '/appliances'
+    | '/beauty'
+    | '/books'
+    | '/cart'
+    | '/checkout'
+    | '/electronics'
+    | '/fashion'
+    | '/furniture'
+    | '/grocery'
+    | '/home'
+    | '/mobiles'
+    | '/order-success'
+    | '/payment'
+    | '/portals'
+    | '/search'
+    | '/sports'
+    | '/success'
+    | '/toys'
+    | '/toys-gifts'
+    | '/wishlist'
+    | '/admin/dashboard'
+    | '/admin/login'
+    | '/appliances/$type'
+    | '/beauty/$type'
+    | '/books/$type'
+    | '/category/$name'
+    | '/customer/dashboard'
+    | '/customer/login'
+    | '/delivery/dashboard'
+    | '/delivery/login'
+    | '/electronics/$type'
+    | '/fashion/$type'
+    | '/fashion/kids'
+    | '/fashion/men'
+    | '/fashion/women'
+    | '/finance/dashboard'
+    | '/finance/login'
+    | '/grocery/$type'
+    | '/home/$type'
+    | '/mobiles/$type'
+    | '/product/$id'
+    | '/seller/dashboard'
+    | '/seller/login'
+    | '/sports/$type'
+    | '/super-admin/dashboard'
+    | '/super-admin/login'
+    | '/support/dashboard'
+    | '/support/login'
+    | '/toys-gifts/$type'
+    | '/toys/$type'
+    | '/track/$id'
+    | '/warehouse/dashboard'
+    | '/warehouse/login'
+    | '/appliances/'
+    | '/beauty/'
+    | '/books/'
+    | '/electronics/'
+    | '/fashion/'
+    | '/grocery/'
+    | '/home/'
+    | '/mobiles/'
+    | '/sports/'
+    | '/toys-gifts/'
+    | '/toys/'
+    | '/appliances/brand/$brand'
+    | '/beauty/brand/$brand'
+    | '/books/brand/$brand'
+    | '/electronics/brand/$brand'
+    | '/fashion/kids/$section'
+    | '/fashion/men/$section'
+    | '/fashion/women/$section'
+    | '/grocery/brand/$brand'
+    | '/home/brand/$brand'
+    | '/mobiles/brand/$brand'
+    | '/sports/brand/$brand'
+    | '/toys-gifts/brand/$brand'
+    | '/toys/brand/$brand'
+    | '/fashion/kids/'
+    | '/fashion/men/'
+    | '/fashion/women/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fashion' | '/wishlist' | '/category/$name' | '/product/$id'
+  to:
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/furniture'
+    | '/order-success'
+    | '/payment'
+    | '/portals'
+    | '/search'
+    | '/success'
+    | '/wishlist'
+    | '/admin/dashboard'
+    | '/admin/login'
+    | '/appliances/$type'
+    | '/beauty/$type'
+    | '/books/$type'
+    | '/category/$name'
+    | '/customer/dashboard'
+    | '/customer/login'
+    | '/delivery/dashboard'
+    | '/delivery/login'
+    | '/electronics/$type'
+    | '/fashion/$type'
+    | '/finance/dashboard'
+    | '/finance/login'
+    | '/grocery/$type'
+    | '/home/$type'
+    | '/mobiles/$type'
+    | '/product/$id'
+    | '/seller/dashboard'
+    | '/seller/login'
+    | '/sports/$type'
+    | '/super-admin/dashboard'
+    | '/super-admin/login'
+    | '/support/dashboard'
+    | '/support/login'
+    | '/toys-gifts/$type'
+    | '/toys/$type'
+    | '/track/$id'
+    | '/warehouse/dashboard'
+    | '/warehouse/login'
+    | '/appliances'
+    | '/beauty'
+    | '/books'
+    | '/electronics'
+    | '/fashion'
+    | '/grocery'
+    | '/home'
+    | '/mobiles'
+    | '/sports'
+    | '/toys-gifts'
+    | '/toys'
+    | '/appliances/brand/$brand'
+    | '/beauty/brand/$brand'
+    | '/books/brand/$brand'
+    | '/electronics/brand/$brand'
+    | '/fashion/kids/$section'
+    | '/fashion/men/$section'
+    | '/fashion/women/$section'
+    | '/grocery/brand/$brand'
+    | '/home/brand/$brand'
+    | '/mobiles/brand/$brand'
+    | '/sports/brand/$brand'
+    | '/toys-gifts/brand/$brand'
+    | '/toys/brand/$brand'
+    | '/fashion/kids'
+    | '/fashion/men'
+    | '/fashion/women'
   id:
     | '__root__'
     | '/'
+    | '/appliances'
+    | '/beauty'
+    | '/books'
+    | '/cart'
+    | '/checkout'
+    | '/electronics'
     | '/fashion'
+    | '/furniture'
+    | '/grocery'
+    | '/home'
+    | '/mobiles'
+    | '/order-success'
+    | '/payment'
+    | '/portals'
+    | '/search'
+    | '/sports'
+    | '/success'
+    | '/toys'
+    | '/toys-gifts'
     | '/wishlist'
+    | '/admin/dashboard'
+    | '/admin/login'
+    | '/appliances/$type'
+    | '/beauty/$type'
+    | '/books/$type'
     | '/category/$name'
+    | '/customer/dashboard'
+    | '/customer/login'
+    | '/delivery/dashboard'
+    | '/delivery/login'
+    | '/electronics/$type'
+    | '/fashion/$type'
+    | '/fashion/kids'
+    | '/fashion/men'
+    | '/fashion/women'
+    | '/finance/dashboard'
+    | '/finance/login'
+    | '/grocery/$type'
+    | '/home/$type'
+    | '/mobiles/$type'
     | '/product/$id'
+    | '/seller/dashboard'
+    | '/seller/login'
+    | '/sports/$type'
+    | '/super-admin/dashboard'
+    | '/super-admin/login'
+    | '/support/dashboard'
+    | '/support/login'
+    | '/toys-gifts/$type'
+    | '/toys/$type'
+    | '/track/$id'
+    | '/warehouse/dashboard'
+    | '/warehouse/login'
+    | '/appliances/'
+    | '/beauty/'
+    | '/books/'
+    | '/electronics/'
+    | '/fashion/'
+    | '/grocery/'
+    | '/home/'
+    | '/mobiles/'
+    | '/sports/'
+    | '/toys-gifts/'
+    | '/toys/'
+    | '/appliances/brand/$brand'
+    | '/beauty/brand/$brand'
+    | '/books/brand/$brand'
+    | '/electronics/brand/$brand'
+    | '/fashion/kids/$section'
+    | '/fashion/men/$section'
+    | '/fashion/women/$section'
+    | '/grocery/brand/$brand'
+    | '/home/brand/$brand'
+    | '/mobiles/brand/$brand'
+    | '/sports/brand/$brand'
+    | '/toys-gifts/brand/$brand'
+    | '/toys/brand/$brand'
+    | '/fashion/kids/'
+    | '/fashion/men/'
+    | '/fashion/women/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FashionRoute: typeof FashionRoute
+  AppliancesRoute: typeof AppliancesRouteWithChildren
+  BeautyRoute: typeof BeautyRouteWithChildren
+  BooksRoute: typeof BooksRouteWithChildren
+  CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ElectronicsRoute: typeof ElectronicsRouteWithChildren
+  FashionRoute: typeof FashionRouteWithChildren
+  FurnitureRoute: typeof FurnitureRoute
+  GroceryRoute: typeof GroceryRouteWithChildren
+  HomeRoute: typeof HomeRouteWithChildren
+  MobilesRoute: typeof MobilesRouteWithChildren
+  OrderSuccessRoute: typeof OrderSuccessRoute
+  PaymentRoute: typeof PaymentRoute
+  PortalsRoute: typeof PortalsRoute
+  SearchRoute: typeof SearchRoute
+  SportsRoute: typeof SportsRouteWithChildren
+  SuccessRoute: typeof SuccessRoute
+  ToysRoute: typeof ToysRouteWithChildren
+  ToysGiftsRoute: typeof ToysGiftsRouteWithChildren
   WishlistRoute: typeof WishlistRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   CategoryNameRoute: typeof CategoryNameRoute
+  CustomerDashboardRoute: typeof CustomerDashboardRoute
+  CustomerLoginRoute: typeof CustomerLoginRoute
+  DeliveryDashboardRoute: typeof DeliveryDashboardRoute
+  DeliveryLoginRoute: typeof DeliveryLoginRoute
+  FinanceDashboardRoute: typeof FinanceDashboardRoute
+  FinanceLoginRoute: typeof FinanceLoginRoute
   ProductIdRoute: typeof ProductIdRoute
+  SellerDashboardRoute: typeof SellerDashboardRoute
+  SellerLoginRoute: typeof SellerLoginRoute
+  SuperAdminDashboardRoute: typeof SuperAdminDashboardRoute
+  SuperAdminLoginRoute: typeof SuperAdminLoginRoute
+  SupportDashboardRoute: typeof SupportDashboardRoute
+  SupportLoginRoute: typeof SupportLoginRoute
+  TrackIdRoute: typeof TrackIdRoute
+  WarehouseDashboardRoute: typeof WarehouseDashboardRoute
+  WarehouseLoginRoute: typeof WarehouseLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -94,11 +1023,137 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/appliances': {
+      id: '/appliances'
+      path: '/appliances'
+      fullPath: '/appliances'
+      preLoaderRoute: typeof AppliancesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/beauty': {
+      id: '/beauty'
+      path: '/beauty'
+      fullPath: '/beauty'
+      preLoaderRoute: typeof BeautyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/books': {
+      id: '/books'
+      path: '/books'
+      fullPath: '/books'
+      preLoaderRoute: typeof BooksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/electronics': {
+      id: '/electronics'
+      path: '/electronics'
+      fullPath: '/electronics'
+      preLoaderRoute: typeof ElectronicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/fashion': {
       id: '/fashion'
       path: '/fashion'
       fullPath: '/fashion'
       preLoaderRoute: typeof FashionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/furniture': {
+      id: '/furniture'
+      path: '/furniture'
+      fullPath: '/furniture'
+      preLoaderRoute: typeof FurnitureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grocery': {
+      id: '/grocery'
+      path: '/grocery'
+      fullPath: '/grocery'
+      preLoaderRoute: typeof GroceryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mobiles': {
+      id: '/mobiles'
+      path: '/mobiles'
+      fullPath: '/mobiles'
+      preLoaderRoute: typeof MobilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order-success': {
+      id: '/order-success'
+      path: '/order-success'
+      fullPath: '/order-success'
+      preLoaderRoute: typeof OrderSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment': {
+      id: '/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof PaymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portals': {
+      id: '/portals'
+      path: '/portals'
+      fullPath: '/portals'
+      preLoaderRoute: typeof PortalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sports': {
+      id: '/sports'
+      path: '/sports'
+      fullPath: '/sports'
+      preLoaderRoute: typeof SportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/success': {
+      id: '/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof SuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/toys': {
+      id: '/toys'
+      path: '/toys'
+      fullPath: '/toys'
+      preLoaderRoute: typeof ToysRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/toys-gifts': {
+      id: '/toys-gifts'
+      path: '/toys-gifts'
+      fullPath: '/toys-gifts'
+      preLoaderRoute: typeof ToysGiftsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wishlist': {
@@ -108,12 +1163,201 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WishlistRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/appliances/': {
+      id: '/appliances/'
+      path: '/'
+      fullPath: '/appliances/'
+      preLoaderRoute: typeof AppliancesIndexRouteImport
+      parentRoute: typeof AppliancesRoute
+    }
+    '/appliances/$type': {
+      id: '/appliances/$type'
+      path: '/$type'
+      fullPath: '/appliances/$type'
+      preLoaderRoute: typeof AppliancesTypeRouteImport
+      parentRoute: typeof AppliancesRoute
+    }
+    '/beauty/': {
+      id: '/beauty/'
+      path: '/'
+      fullPath: '/beauty/'
+      preLoaderRoute: typeof BeautyIndexRouteImport
+      parentRoute: typeof BeautyRoute
+    }
+    '/beauty/$type': {
+      id: '/beauty/$type'
+      path: '/$type'
+      fullPath: '/beauty/$type'
+      preLoaderRoute: typeof BeautyTypeRouteImport
+      parentRoute: typeof BeautyRoute
+    }
+    '/books/': {
+      id: '/books/'
+      path: '/'
+      fullPath: '/books/'
+      preLoaderRoute: typeof BooksIndexRouteImport
+      parentRoute: typeof BooksRoute
+    }
+    '/books/$type': {
+      id: '/books/$type'
+      path: '/$type'
+      fullPath: '/books/$type'
+      preLoaderRoute: typeof BooksTypeRouteImport
+      parentRoute: typeof BooksRoute
+    }
     '/category/$name': {
       id: '/category/$name'
       path: '/category/$name'
       fullPath: '/category/$name'
       preLoaderRoute: typeof CategoryNameRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/customer/dashboard': {
+      id: '/customer/dashboard'
+      path: '/customer/dashboard'
+      fullPath: '/customer/dashboard'
+      preLoaderRoute: typeof CustomerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/login': {
+      id: '/customer/login'
+      path: '/customer/login'
+      fullPath: '/customer/login'
+      preLoaderRoute: typeof CustomerLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delivery/dashboard': {
+      id: '/delivery/dashboard'
+      path: '/delivery/dashboard'
+      fullPath: '/delivery/dashboard'
+      preLoaderRoute: typeof DeliveryDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delivery/login': {
+      id: '/delivery/login'
+      path: '/delivery/login'
+      fullPath: '/delivery/login'
+      preLoaderRoute: typeof DeliveryLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/electronics/': {
+      id: '/electronics/'
+      path: '/'
+      fullPath: '/electronics/'
+      preLoaderRoute: typeof ElectronicsIndexRouteImport
+      parentRoute: typeof ElectronicsRoute
+    }
+    '/electronics/$type': {
+      id: '/electronics/$type'
+      path: '/$type'
+      fullPath: '/electronics/$type'
+      preLoaderRoute: typeof ElectronicsTypeRouteImport
+      parentRoute: typeof ElectronicsRoute
+    }
+    '/fashion/': {
+      id: '/fashion/'
+      path: '/'
+      fullPath: '/fashion/'
+      preLoaderRoute: typeof FashionIndexRouteImport
+      parentRoute: typeof FashionRoute
+    }
+    '/fashion/$type': {
+      id: '/fashion/$type'
+      path: '/$type'
+      fullPath: '/fashion/$type'
+      preLoaderRoute: typeof FashionTypeRouteImport
+      parentRoute: typeof FashionRoute
+    }
+    '/fashion/kids': {
+      id: '/fashion/kids'
+      path: '/kids'
+      fullPath: '/fashion/kids'
+      preLoaderRoute: typeof FashionKidsRouteImport
+      parentRoute: typeof FashionRoute
+    }
+    '/fashion/men': {
+      id: '/fashion/men'
+      path: '/men'
+      fullPath: '/fashion/men'
+      preLoaderRoute: typeof FashionMenRouteImport
+      parentRoute: typeof FashionRoute
+    }
+    '/fashion/women': {
+      id: '/fashion/women'
+      path: '/women'
+      fullPath: '/fashion/women'
+      preLoaderRoute: typeof FashionWomenRouteImport
+      parentRoute: typeof FashionRoute
+    }
+    '/finance/dashboard': {
+      id: '/finance/dashboard'
+      path: '/finance/dashboard'
+      fullPath: '/finance/dashboard'
+      preLoaderRoute: typeof FinanceDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance/login': {
+      id: '/finance/login'
+      path: '/finance/login'
+      fullPath: '/finance/login'
+      preLoaderRoute: typeof FinanceLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grocery/': {
+      id: '/grocery/'
+      path: '/'
+      fullPath: '/grocery/'
+      preLoaderRoute: typeof GroceryIndexRouteImport
+      parentRoute: typeof GroceryRoute
+    }
+    '/grocery/$type': {
+      id: '/grocery/$type'
+      path: '/$type'
+      fullPath: '/grocery/$type'
+      preLoaderRoute: typeof GroceryTypeRouteImport
+      parentRoute: typeof GroceryRoute
+    }
+    '/home/': {
+      id: '/home/'
+      path: '/'
+      fullPath: '/home/'
+      preLoaderRoute: typeof HomeIndexRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    '/home/$type': {
+      id: '/home/$type'
+      path: '/$type'
+      fullPath: '/home/$type'
+      preLoaderRoute: typeof HomeTypeRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    '/mobiles/': {
+      id: '/mobiles/'
+      path: '/'
+      fullPath: '/mobiles/'
+      preLoaderRoute: typeof MobilesIndexRouteImport
+      parentRoute: typeof MobilesRoute
+    }
+    '/mobiles/$type': {
+      id: '/mobiles/$type'
+      path: '/$type'
+      fullPath: '/mobiles/$type'
+      preLoaderRoute: typeof MobilesTypeRouteImport
+      parentRoute: typeof MobilesRoute
     }
     '/product/$id': {
       id: '/product/$id'
@@ -122,15 +1366,478 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/seller/dashboard': {
+      id: '/seller/dashboard'
+      path: '/seller/dashboard'
+      fullPath: '/seller/dashboard'
+      preLoaderRoute: typeof SellerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seller/login': {
+      id: '/seller/login'
+      path: '/seller/login'
+      fullPath: '/seller/login'
+      preLoaderRoute: typeof SellerLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sports/': {
+      id: '/sports/'
+      path: '/'
+      fullPath: '/sports/'
+      preLoaderRoute: typeof SportsIndexRouteImport
+      parentRoute: typeof SportsRoute
+    }
+    '/sports/$type': {
+      id: '/sports/$type'
+      path: '/$type'
+      fullPath: '/sports/$type'
+      preLoaderRoute: typeof SportsTypeRouteImport
+      parentRoute: typeof SportsRoute
+    }
+    '/super-admin/dashboard': {
+      id: '/super-admin/dashboard'
+      path: '/super-admin/dashboard'
+      fullPath: '/super-admin/dashboard'
+      preLoaderRoute: typeof SuperAdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/super-admin/login': {
+      id: '/super-admin/login'
+      path: '/super-admin/login'
+      fullPath: '/super-admin/login'
+      preLoaderRoute: typeof SuperAdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support/dashboard': {
+      id: '/support/dashboard'
+      path: '/support/dashboard'
+      fullPath: '/support/dashboard'
+      preLoaderRoute: typeof SupportDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support/login': {
+      id: '/support/login'
+      path: '/support/login'
+      fullPath: '/support/login'
+      preLoaderRoute: typeof SupportLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/toys-gifts/': {
+      id: '/toys-gifts/'
+      path: '/'
+      fullPath: '/toys-gifts/'
+      preLoaderRoute: typeof ToysGiftsIndexRouteImport
+      parentRoute: typeof ToysGiftsRoute
+    }
+    '/toys-gifts/$type': {
+      id: '/toys-gifts/$type'
+      path: '/$type'
+      fullPath: '/toys-gifts/$type'
+      preLoaderRoute: typeof ToysGiftsTypeRouteImport
+      parentRoute: typeof ToysGiftsRoute
+    }
+    '/toys/': {
+      id: '/toys/'
+      path: '/'
+      fullPath: '/toys/'
+      preLoaderRoute: typeof ToysIndexRouteImport
+      parentRoute: typeof ToysRoute
+    }
+    '/toys/$type': {
+      id: '/toys/$type'
+      path: '/$type'
+      fullPath: '/toys/$type'
+      preLoaderRoute: typeof ToysTypeRouteImport
+      parentRoute: typeof ToysRoute
+    }
+    '/track/$id': {
+      id: '/track/$id'
+      path: '/track/$id'
+      fullPath: '/track/$id'
+      preLoaderRoute: typeof TrackIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/warehouse/dashboard': {
+      id: '/warehouse/dashboard'
+      path: '/warehouse/dashboard'
+      fullPath: '/warehouse/dashboard'
+      preLoaderRoute: typeof WarehouseDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/warehouse/login': {
+      id: '/warehouse/login'
+      path: '/warehouse/login'
+      fullPath: '/warehouse/login'
+      preLoaderRoute: typeof WarehouseLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/appliances/brand/$brand': {
+      id: '/appliances/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/appliances/brand/$brand'
+      preLoaderRoute: typeof AppliancesBrandBrandRouteImport
+      parentRoute: typeof AppliancesRoute
+    }
+    '/beauty/brand/$brand': {
+      id: '/beauty/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/beauty/brand/$brand'
+      preLoaderRoute: typeof BeautyBrandBrandRouteImport
+      parentRoute: typeof BeautyRoute
+    }
+    '/books/brand/$brand': {
+      id: '/books/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/books/brand/$brand'
+      preLoaderRoute: typeof BooksBrandBrandRouteImport
+      parentRoute: typeof BooksRoute
+    }
+    '/electronics/brand/$brand': {
+      id: '/electronics/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/electronics/brand/$brand'
+      preLoaderRoute: typeof ElectronicsBrandBrandRouteImport
+      parentRoute: typeof ElectronicsRoute
+    }
+    '/fashion/kids/': {
+      id: '/fashion/kids/'
+      path: '/'
+      fullPath: '/fashion/kids/'
+      preLoaderRoute: typeof FashionKidsIndexRouteImport
+      parentRoute: typeof FashionKidsRoute
+    }
+    '/fashion/kids/$section': {
+      id: '/fashion/kids/$section'
+      path: '/$section'
+      fullPath: '/fashion/kids/$section'
+      preLoaderRoute: typeof FashionKidsSectionRouteImport
+      parentRoute: typeof FashionKidsRoute
+    }
+    '/fashion/men/': {
+      id: '/fashion/men/'
+      path: '/'
+      fullPath: '/fashion/men/'
+      preLoaderRoute: typeof FashionMenIndexRouteImport
+      parentRoute: typeof FashionMenRoute
+    }
+    '/fashion/men/$section': {
+      id: '/fashion/men/$section'
+      path: '/$section'
+      fullPath: '/fashion/men/$section'
+      preLoaderRoute: typeof FashionMenSectionRouteImport
+      parentRoute: typeof FashionMenRoute
+    }
+    '/fashion/women/': {
+      id: '/fashion/women/'
+      path: '/'
+      fullPath: '/fashion/women/'
+      preLoaderRoute: typeof FashionWomenIndexRouteImport
+      parentRoute: typeof FashionWomenRoute
+    }
+    '/fashion/women/$section': {
+      id: '/fashion/women/$section'
+      path: '/$section'
+      fullPath: '/fashion/women/$section'
+      preLoaderRoute: typeof FashionWomenSectionRouteImport
+      parentRoute: typeof FashionWomenRoute
+    }
+    '/grocery/brand/$brand': {
+      id: '/grocery/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/grocery/brand/$brand'
+      preLoaderRoute: typeof GroceryBrandBrandRouteImport
+      parentRoute: typeof GroceryRoute
+    }
+    '/home/brand/$brand': {
+      id: '/home/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/home/brand/$brand'
+      preLoaderRoute: typeof HomeBrandBrandRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    '/mobiles/brand/$brand': {
+      id: '/mobiles/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/mobiles/brand/$brand'
+      preLoaderRoute: typeof MobilesBrandBrandRouteImport
+      parentRoute: typeof MobilesRoute
+    }
+    '/sports/brand/$brand': {
+      id: '/sports/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/sports/brand/$brand'
+      preLoaderRoute: typeof SportsBrandBrandRouteImport
+      parentRoute: typeof SportsRoute
+    }
+    '/toys-gifts/brand/$brand': {
+      id: '/toys-gifts/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/toys-gifts/brand/$brand'
+      preLoaderRoute: typeof ToysGiftsBrandBrandRouteImport
+      parentRoute: typeof ToysGiftsRoute
+    }
+    '/toys/brand/$brand': {
+      id: '/toys/brand/$brand'
+      path: '/brand/$brand'
+      fullPath: '/toys/brand/$brand'
+      preLoaderRoute: typeof ToysBrandBrandRouteImport
+      parentRoute: typeof ToysRoute
+    }
   }
 }
 
+interface AppliancesRouteChildren {
+  AppliancesTypeRoute: typeof AppliancesTypeRoute
+  AppliancesIndexRoute: typeof AppliancesIndexRoute
+  AppliancesBrandBrandRoute: typeof AppliancesBrandBrandRoute
+}
+
+const AppliancesRouteChildren: AppliancesRouteChildren = {
+  AppliancesTypeRoute: AppliancesTypeRoute,
+  AppliancesIndexRoute: AppliancesIndexRoute,
+  AppliancesBrandBrandRoute: AppliancesBrandBrandRoute,
+}
+
+const AppliancesRouteWithChildren = AppliancesRoute._addFileChildren(
+  AppliancesRouteChildren,
+)
+
+interface BeautyRouteChildren {
+  BeautyTypeRoute: typeof BeautyTypeRoute
+  BeautyIndexRoute: typeof BeautyIndexRoute
+  BeautyBrandBrandRoute: typeof BeautyBrandBrandRoute
+}
+
+const BeautyRouteChildren: BeautyRouteChildren = {
+  BeautyTypeRoute: BeautyTypeRoute,
+  BeautyIndexRoute: BeautyIndexRoute,
+  BeautyBrandBrandRoute: BeautyBrandBrandRoute,
+}
+
+const BeautyRouteWithChildren =
+  BeautyRoute._addFileChildren(BeautyRouteChildren)
+
+interface BooksRouteChildren {
+  BooksTypeRoute: typeof BooksTypeRoute
+  BooksIndexRoute: typeof BooksIndexRoute
+  BooksBrandBrandRoute: typeof BooksBrandBrandRoute
+}
+
+const BooksRouteChildren: BooksRouteChildren = {
+  BooksTypeRoute: BooksTypeRoute,
+  BooksIndexRoute: BooksIndexRoute,
+  BooksBrandBrandRoute: BooksBrandBrandRoute,
+}
+
+const BooksRouteWithChildren = BooksRoute._addFileChildren(BooksRouteChildren)
+
+interface ElectronicsRouteChildren {
+  ElectronicsTypeRoute: typeof ElectronicsTypeRoute
+  ElectronicsIndexRoute: typeof ElectronicsIndexRoute
+  ElectronicsBrandBrandRoute: typeof ElectronicsBrandBrandRoute
+}
+
+const ElectronicsRouteChildren: ElectronicsRouteChildren = {
+  ElectronicsTypeRoute: ElectronicsTypeRoute,
+  ElectronicsIndexRoute: ElectronicsIndexRoute,
+  ElectronicsBrandBrandRoute: ElectronicsBrandBrandRoute,
+}
+
+const ElectronicsRouteWithChildren = ElectronicsRoute._addFileChildren(
+  ElectronicsRouteChildren,
+)
+
+interface FashionKidsRouteChildren {
+  FashionKidsSectionRoute: typeof FashionKidsSectionRoute
+  FashionKidsIndexRoute: typeof FashionKidsIndexRoute
+}
+
+const FashionKidsRouteChildren: FashionKidsRouteChildren = {
+  FashionKidsSectionRoute: FashionKidsSectionRoute,
+  FashionKidsIndexRoute: FashionKidsIndexRoute,
+}
+
+const FashionKidsRouteWithChildren = FashionKidsRoute._addFileChildren(
+  FashionKidsRouteChildren,
+)
+
+interface FashionMenRouteChildren {
+  FashionMenSectionRoute: typeof FashionMenSectionRoute
+  FashionMenIndexRoute: typeof FashionMenIndexRoute
+}
+
+const FashionMenRouteChildren: FashionMenRouteChildren = {
+  FashionMenSectionRoute: FashionMenSectionRoute,
+  FashionMenIndexRoute: FashionMenIndexRoute,
+}
+
+const FashionMenRouteWithChildren = FashionMenRoute._addFileChildren(
+  FashionMenRouteChildren,
+)
+
+interface FashionWomenRouteChildren {
+  FashionWomenSectionRoute: typeof FashionWomenSectionRoute
+  FashionWomenIndexRoute: typeof FashionWomenIndexRoute
+}
+
+const FashionWomenRouteChildren: FashionWomenRouteChildren = {
+  FashionWomenSectionRoute: FashionWomenSectionRoute,
+  FashionWomenIndexRoute: FashionWomenIndexRoute,
+}
+
+const FashionWomenRouteWithChildren = FashionWomenRoute._addFileChildren(
+  FashionWomenRouteChildren,
+)
+
+interface FashionRouteChildren {
+  FashionTypeRoute: typeof FashionTypeRoute
+  FashionKidsRoute: typeof FashionKidsRouteWithChildren
+  FashionMenRoute: typeof FashionMenRouteWithChildren
+  FashionWomenRoute: typeof FashionWomenRouteWithChildren
+  FashionIndexRoute: typeof FashionIndexRoute
+}
+
+const FashionRouteChildren: FashionRouteChildren = {
+  FashionTypeRoute: FashionTypeRoute,
+  FashionKidsRoute: FashionKidsRouteWithChildren,
+  FashionMenRoute: FashionMenRouteWithChildren,
+  FashionWomenRoute: FashionWomenRouteWithChildren,
+  FashionIndexRoute: FashionIndexRoute,
+}
+
+const FashionRouteWithChildren =
+  FashionRoute._addFileChildren(FashionRouteChildren)
+
+interface GroceryRouteChildren {
+  GroceryTypeRoute: typeof GroceryTypeRoute
+  GroceryIndexRoute: typeof GroceryIndexRoute
+  GroceryBrandBrandRoute: typeof GroceryBrandBrandRoute
+}
+
+const GroceryRouteChildren: GroceryRouteChildren = {
+  GroceryTypeRoute: GroceryTypeRoute,
+  GroceryIndexRoute: GroceryIndexRoute,
+  GroceryBrandBrandRoute: GroceryBrandBrandRoute,
+}
+
+const GroceryRouteWithChildren =
+  GroceryRoute._addFileChildren(GroceryRouteChildren)
+
+interface HomeRouteChildren {
+  HomeTypeRoute: typeof HomeTypeRoute
+  HomeIndexRoute: typeof HomeIndexRoute
+  HomeBrandBrandRoute: typeof HomeBrandBrandRoute
+}
+
+const HomeRouteChildren: HomeRouteChildren = {
+  HomeTypeRoute: HomeTypeRoute,
+  HomeIndexRoute: HomeIndexRoute,
+  HomeBrandBrandRoute: HomeBrandBrandRoute,
+}
+
+const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
+
+interface MobilesRouteChildren {
+  MobilesTypeRoute: typeof MobilesTypeRoute
+  MobilesIndexRoute: typeof MobilesIndexRoute
+  MobilesBrandBrandRoute: typeof MobilesBrandBrandRoute
+}
+
+const MobilesRouteChildren: MobilesRouteChildren = {
+  MobilesTypeRoute: MobilesTypeRoute,
+  MobilesIndexRoute: MobilesIndexRoute,
+  MobilesBrandBrandRoute: MobilesBrandBrandRoute,
+}
+
+const MobilesRouteWithChildren =
+  MobilesRoute._addFileChildren(MobilesRouteChildren)
+
+interface SportsRouteChildren {
+  SportsTypeRoute: typeof SportsTypeRoute
+  SportsIndexRoute: typeof SportsIndexRoute
+  SportsBrandBrandRoute: typeof SportsBrandBrandRoute
+}
+
+const SportsRouteChildren: SportsRouteChildren = {
+  SportsTypeRoute: SportsTypeRoute,
+  SportsIndexRoute: SportsIndexRoute,
+  SportsBrandBrandRoute: SportsBrandBrandRoute,
+}
+
+const SportsRouteWithChildren =
+  SportsRoute._addFileChildren(SportsRouteChildren)
+
+interface ToysRouteChildren {
+  ToysTypeRoute: typeof ToysTypeRoute
+  ToysIndexRoute: typeof ToysIndexRoute
+  ToysBrandBrandRoute: typeof ToysBrandBrandRoute
+}
+
+const ToysRouteChildren: ToysRouteChildren = {
+  ToysTypeRoute: ToysTypeRoute,
+  ToysIndexRoute: ToysIndexRoute,
+  ToysBrandBrandRoute: ToysBrandBrandRoute,
+}
+
+const ToysRouteWithChildren = ToysRoute._addFileChildren(ToysRouteChildren)
+
+interface ToysGiftsRouteChildren {
+  ToysGiftsTypeRoute: typeof ToysGiftsTypeRoute
+  ToysGiftsIndexRoute: typeof ToysGiftsIndexRoute
+  ToysGiftsBrandBrandRoute: typeof ToysGiftsBrandBrandRoute
+}
+
+const ToysGiftsRouteChildren: ToysGiftsRouteChildren = {
+  ToysGiftsTypeRoute: ToysGiftsTypeRoute,
+  ToysGiftsIndexRoute: ToysGiftsIndexRoute,
+  ToysGiftsBrandBrandRoute: ToysGiftsBrandBrandRoute,
+}
+
+const ToysGiftsRouteWithChildren = ToysGiftsRoute._addFileChildren(
+  ToysGiftsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FashionRoute: FashionRoute,
+  AppliancesRoute: AppliancesRouteWithChildren,
+  BeautyRoute: BeautyRouteWithChildren,
+  BooksRoute: BooksRouteWithChildren,
+  CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
+  ElectronicsRoute: ElectronicsRouteWithChildren,
+  FashionRoute: FashionRouteWithChildren,
+  FurnitureRoute: FurnitureRoute,
+  GroceryRoute: GroceryRouteWithChildren,
+  HomeRoute: HomeRouteWithChildren,
+  MobilesRoute: MobilesRouteWithChildren,
+  OrderSuccessRoute: OrderSuccessRoute,
+  PaymentRoute: PaymentRoute,
+  PortalsRoute: PortalsRoute,
+  SearchRoute: SearchRoute,
+  SportsRoute: SportsRouteWithChildren,
+  SuccessRoute: SuccessRoute,
+  ToysRoute: ToysRouteWithChildren,
+  ToysGiftsRoute: ToysGiftsRouteWithChildren,
   WishlistRoute: WishlistRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminLoginRoute: AdminLoginRoute,
   CategoryNameRoute: CategoryNameRoute,
+  CustomerDashboardRoute: CustomerDashboardRoute,
+  CustomerLoginRoute: CustomerLoginRoute,
+  DeliveryDashboardRoute: DeliveryDashboardRoute,
+  DeliveryLoginRoute: DeliveryLoginRoute,
+  FinanceDashboardRoute: FinanceDashboardRoute,
+  FinanceLoginRoute: FinanceLoginRoute,
   ProductIdRoute: ProductIdRoute,
+  SellerDashboardRoute: SellerDashboardRoute,
+  SellerLoginRoute: SellerLoginRoute,
+  SuperAdminDashboardRoute: SuperAdminDashboardRoute,
+  SuperAdminLoginRoute: SuperAdminLoginRoute,
+  SupportDashboardRoute: SupportDashboardRoute,
+  SupportLoginRoute: SupportLoginRoute,
+  TrackIdRoute: TrackIdRoute,
+  WarehouseDashboardRoute: WarehouseDashboardRoute,
+  WarehouseLoginRoute: WarehouseLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

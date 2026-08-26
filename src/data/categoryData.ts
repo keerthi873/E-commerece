@@ -1,0 +1,1263 @@
+import type { Product } from "@/components/store/catalog";
+import { baseProducts } from "@/components/store/catalog";
+
+export type CategorySection = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  products: Product[];
+};
+
+export type CategoryPageData = {
+  slug: string;
+  name: string;
+  description: string;
+  bannerImage: string;
+  sections: CategorySection[];
+};
+
+export const categoryPagesData: Record<string, CategoryPageData> = {
+  fashion: {
+    slug: "fashion",
+    name: "Fashion & Lifestyle",
+    description: "Trending fashion for Men, Women & Kids — Ethnic, Casual, Western, Footwear & Accessories.",
+    bannerImage: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      // --- MEN SECTION ---
+      {
+        id: "men-casual-wear",
+        title: "Men — Casual Wear",
+        subtitle: "Cotton T-shirts, denim jeans & casual shirts",
+        products: [
+          {
+            id: "loomwear-tee-3",
+            image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
+            brand: "Zara",
+            title: "Zara Solid Cotton Round Neck T-Shirt for Men (Pack of 3)",
+            price: 649,
+            mrp: 1999,
+            rating: 4.1,
+            reviews: "9,354",
+            category: "Fashion",
+            fashionCategory: "men",
+            color: "White",
+            sizes: ["S", "M", "L", "XL"],
+          },
+          {
+            id: "loomwear-men-jeans",
+            image: "https://images.unsplash.com/photo-1542272604-780c96856592?auto=format&fit=crop&w=600&q=80",
+            brand: "H&M",
+            title: "H&M Slim Fit Stretchable Denim Jeans for Men",
+            price: 1299,
+            mrp: 2999,
+            rating: 4.3,
+            reviews: "14,810",
+            category: "Fashion",
+            fashionCategory: "men",
+            color: "Blue",
+            sizes: ["M", "L", "XL", "XXL"],
+          },
+        ],
+      },
+      {
+        id: "men-ethnic-wear",
+        title: "Men — Ethnic Wear",
+        subtitle: "Festive kurtas, Nehru jackets & sherwanis",
+        products: [
+          {
+            id: "loomwear-men-kurta",
+            image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=600&q=80",
+            brand: "Loomwear",
+            title: "Loomwear Silk Blend Festive Nehru Jacket & Kurta Set",
+            price: 2499,
+            mrp: 4999,
+            rating: 4.5,
+            reviews: "5,410",
+            category: "Fashion",
+            fashionCategory: "men",
+            color: "Maroon",
+            sizes: ["M", "L", "XL"],
+          },
+        ],
+      },
+      {
+        id: "men-sportswear",
+        title: "Men — Sportswear",
+        subtitle: "Dry-fit active t-shirts, joggers & tracksuits",
+        products: [
+          {
+            id: "nike-men-dryfit-tee",
+            image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=600&q=80",
+            brand: "Nike",
+            title: "Nike Dri-FIT Men's Training T-Shirt",
+            price: 1495,
+            mrp: 2195,
+            rating: 4.6,
+            reviews: "12,300",
+            category: "Fashion",
+            fashionCategory: "men",
+          },
+        ],
+      },
+      {
+        id: "men-essentials",
+        title: "Men — Essentials",
+        subtitle: "Innerwear, vests & loungewear shorts",
+        products: [
+          {
+            id: "jockey-men-briefs",
+            image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
+            brand: "Jockey",
+            title: "Jockey Cotton Super Combed Trunk (Pack of 2)",
+            price: 599,
+            mrp: 799,
+            rating: 4.7,
+            reviews: "45,100",
+            category: "Fashion",
+            fashionCategory: "men",
+          },
+        ],
+      },
+      {
+        id: "men-footwear",
+        title: "Men — Footwear",
+        subtitle: "Sneakers, formal shoes & casual loafers",
+        products: [
+          {
+            id: "pulseform-shoes",
+            image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
+            brand: "Puma",
+            title: "Pulseform Velocity Running & Training Shoes for Men",
+            price: 1899,
+            mrp: 4499,
+            rating: 4.4,
+            reviews: "31,040",
+            category: "Fashion",
+            fashionCategory: "men",
+          },
+        ],
+      },
+      {
+        id: "men-accessories",
+        title: "Men — Accessories",
+        subtitle: "Leather belts, wallets & sunglasses",
+        products: [
+          {
+            id: "wildhorn-leather-wallet",
+            image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
+            brand: "Wildhorn",
+            title: "Wildhorn Genuine Leather Wallet & Belt Gift Set",
+            price: 899,
+            mrp: 1999,
+            rating: 4.5,
+            reviews: "18,900",
+            category: "Fashion",
+            fashionCategory: "men",
+          },
+        ],
+      },
+      {
+        id: "men-fragrances",
+        title: "Men — Fragrances",
+        subtitle: "Long-lasting perfumes & body deodorants",
+        products: [
+          {
+            id: "wild-stone-edge-perfume",
+            image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80",
+            brand: "Wild Stone",
+            title: "Wild Stone Edge Eau De Parfum for Men (100ml)",
+            price: 449,
+            mrp: 699,
+            rating: 4.4,
+            reviews: "22,400",
+            category: "Fashion",
+            fashionCategory: "men",
+          },
+        ],
+      },
+
+      // --- WOMEN SECTION ---
+      {
+        id: "women-western-wear",
+        title: "Women — Western Wear",
+        subtitle: "Dresses, tops, skirts & denim jeans",
+        products: [
+          {
+            id: "loomwear-women-dress",
+            image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80",
+            brand: "Zara",
+            title: "Zara Floral Print A-Line Midi Dress for Women",
+            price: 1499,
+            mrp: 3499,
+            rating: 4.4,
+            reviews: "11,280",
+            category: "Fashion",
+            fashionCategory: "women",
+            color: "Yellow",
+            sizes: ["S", "M", "L"],
+          },
+        ],
+      },
+      {
+        id: "women-ethnic-wear",
+        title: "Women — Ethnic Wear",
+        subtitle: "Banarasi silk sarees, Anarkali suits & lehengas",
+        products: [
+          {
+            id: "loomwear-women-saree",
+            image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80",
+            brand: "Loomwear",
+            title: "Loomwear Banarasi Soft Silk Saree with Blouse Piece",
+            price: 1999,
+            mrp: 5999,
+            rating: 4.6,
+            reviews: "28,910",
+            category: "Fashion",
+            fashionCategory: "women",
+            color: "Red",
+          },
+        ],
+      },
+      {
+        id: "women-fusion-wear",
+        title: "Women — Fusion Wear",
+        subtitle: "Indo-western tunics, short kurtis & shrugs",
+        products: [
+          {
+            id: "w-women-fusion-tunic",
+            image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=80",
+            brand: "W for Woman",
+            title: "W for Woman Printed Asymmetric Fusion Tunic Kurti",
+            price: 1299,
+            mrp: 2499,
+            rating: 4.3,
+            reviews: "8,900",
+            category: "Fashion",
+            fashionCategory: "women",
+          },
+        ],
+      },
+      {
+        id: "women-essentials",
+        title: "Women — Essentials",
+        subtitle: "Lingerie, sleepwear & thermal sets",
+        products: [
+          {
+            id: "clovia-cotton-bra-set",
+            image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
+            brand: "Clovia",
+            title: "Clovia Non-Padded Non-Wired T-Shirt Bra (Pack of 2)",
+            price: 699,
+            mrp: 1299,
+            rating: 4.5,
+            reviews: "19,800",
+            category: "Fashion",
+            fashionCategory: "women",
+          },
+        ],
+      },
+      {
+        id: "women-sportswear",
+        title: "Women — Sportswear",
+        subtitle: "Gym leggings, sports bras & active jackets",
+        products: [
+          {
+            id: "adidas-women-tights",
+            image: "https://images.unsplash.com/photo-1506152983158-b4a74a01c721?auto=format&fit=crop&w=600&q=80",
+            brand: "Adidas",
+            title: "Adidas Women High-Waisted Workout Tights",
+            price: 1799,
+            mrp: 2999,
+            rating: 4.6,
+            reviews: "14,200",
+            category: "Fashion",
+            fashionCategory: "women",
+          },
+        ],
+      },
+      {
+        id: "women-footwear",
+        title: "Women — Footwear",
+        subtitle: "Block heels, ethnic mojris & casual sneakers",
+        products: [
+          {
+            id: "bata-women-heels",
+            image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
+            brand: "Bata",
+            title: "Bata Women Comfort Block Heel Sandals",
+            price: 999,
+            mrp: 1999,
+            rating: 4.3,
+            reviews: "12,900",
+            category: "Fashion",
+            fashionCategory: "women",
+          },
+        ],
+      },
+      {
+        id: "women-accessories",
+        title: "Women — Accessories",
+        subtitle: "Handbags, clutches & fashion jewelry",
+        products: [
+          {
+            id: "lavie-handbag-women",
+            image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80",
+            brand: "Lavie",
+            title: "Lavie Women Tote Handbag with Adjustable Sling",
+            price: 1599,
+            mrp: 3999,
+            rating: 4.5,
+            reviews: "24,100",
+            category: "Fashion",
+            fashionCategory: "women",
+          },
+        ],
+      },
+
+      // --- KIDS SECTION ---
+      {
+        id: "kids-boys",
+        title: "Kids — Boys Fashion",
+        subtitle: "T-shirts, denim shorts & party suits for boys",
+        products: [
+          {
+            id: "loomwear-kids-set",
+            image: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=600&q=80",
+            brand: "Hopscotch",
+            title: "Hopscotch Boys Cotton Printed T-Shirt and Short Set",
+            price: 699,
+            mrp: 1499,
+            rating: 4.4,
+            reviews: "8,920",
+            category: "Fashion",
+            fashionCategory: "kids",
+            sizes: ["2-3Y", "4-5Y", "6-7Y"],
+          },
+        ],
+      },
+      {
+        id: "kids-girls",
+        title: "Kids — Girls Fashion",
+        subtitle: "Frocks, party gowns & jumpsuit sets",
+        products: [
+          {
+            id: "hopscotch-girl-frock",
+            image: "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?auto=format&fit=crop&w=600&q=80",
+            brand: "Hopscotch",
+            title: "Hopscotch Girls Floral Printed Party Frock",
+            price: 899,
+            mrp: 1799,
+            rating: 4.6,
+            reviews: "11,400",
+            category: "Fashion",
+            fashionCategory: "kids",
+          },
+        ],
+      },
+      {
+        id: "kids-infants",
+        title: "Kids — Infants & Baby Care Wear",
+        subtitle: "Rompers, onesies & soft baby sleepsuits",
+        products: [
+          {
+            id: "mothercare-baby-romper",
+            image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80",
+            brand: "Mothercare",
+            title: "Mothercare Organic Cotton Baby Rompers (Pack of 3)",
+            price: 999,
+            mrp: 1899,
+            rating: 4.8,
+            reviews: "15,800",
+            category: "Fashion",
+            fashionCategory: "kids",
+          },
+        ],
+      },
+      {
+        id: "kids-teens",
+        title: "Kids — Teens Collection",
+        subtitle: "Trendy graphic tees & hoodies for teenagers",
+        products: [
+          {
+            id: "puma-teen-hoodie",
+            image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80",
+            brand: "Puma",
+            title: "Puma Teen Boys & Girls Fleece Pullover Hoodie",
+            price: 1299,
+            mrp: 2499,
+            rating: 4.5,
+            reviews: "7,300",
+            category: "Fashion",
+            fashionCategory: "kids",
+          },
+        ],
+      },
+      {
+        id: "kids-accessories",
+        title: "Kids — Accessories",
+        subtitle: "School bags, caps & cartoon watches",
+        products: [
+          {
+            id: "disney-backpack-kids",
+            image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=600&q=80",
+            brand: "Disney",
+            title: "Disney Marvel Avengers Kids School Backpack 16-inch",
+            price: 799,
+            mrp: 1499,
+            rating: 4.7,
+            reviews: "21,000",
+            category: "Fashion",
+            fashionCategory: "kids",
+          },
+        ],
+      },
+    ],
+  },
+  mobiles: {
+    slug: "mobiles",
+    name: "Mobiles & Smartphones",
+    description: "Explore latest 5G smartphones, flagship devices, gaming phones & budget mobiles.",
+    bannerImage: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "trending-phones",
+        title: "Trending Phones",
+        subtitle: "Most popular smartphones right now",
+        products: [
+          {
+            id: "nexon-note-5g",
+            image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+            brand: "Nexon",
+            title: "Nexon Note 12 5G (8GB RAM, 128GB Storage)",
+            price: 13499,
+            mrp: 18999,
+            rating: 4.3,
+            reviews: "76,431",
+            category: "Mobiles",
+          },
+          {
+            id: "pixel-7a-5g",
+            image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+            brand: "Google",
+            title: "Google Pixel 7a 5G (Charcoal, 128 GB)",
+            price: 37999,
+            mrp: 43999,
+            rating: 4.4,
+            reviews: "18,920",
+            category: "Mobiles",
+          },
+          {
+            id: "galaxy-m34-5g",
+            image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+            brand: "Samsung",
+            title: "Samsung Galaxy M34 5G (6GB RAM, 128GB)",
+            price: 16999,
+            mrp: 24499,
+            rating: 4.2,
+            reviews: "42,100",
+            category: "Mobiles",
+          },
+          {
+            id: "oneplus-nord-ce3",
+            image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+            brand: "OnePlus",
+            title: "OnePlus Nord CE 3 Lite 5G (Pastel Lime, 8GB)",
+            price: 19999,
+            mrp: 21999,
+            rating: 4.4,
+            reviews: "54,230",
+            category: "Mobiles",
+          },
+        ],
+      },
+      {
+        id: "budget-phones",
+        title: "Budget Phones",
+        subtitle: "Best smartphones under ₹15,000",
+        products: [
+          {
+            id: "realme-c55",
+            image: "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=600&q=80",
+            brand: "Realme",
+            title: "Realme C55 (Sunshower, 64 GB) (6 GB RAM)",
+            price: 10999,
+            mrp: 13999,
+            rating: 4.1,
+            reviews: "28,450",
+            category: "Mobiles",
+          },
+          {
+            id: "redmi-12c",
+            image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+            brand: "Redmi",
+            title: "Redmi 12C (Mint Green, 4GB RAM, 64GB)",
+            price: 8499,
+            mrp: 11999,
+            rating: 4.0,
+            reviews: "35,120",
+            category: "Mobiles",
+          },
+          {
+            id: "poco-m6-pro",
+            image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=600&q=80",
+            brand: "POCO",
+            title: "POCO M6 Pro 5G (Power Black, 128 GB)",
+            price: 11999,
+            mrp: 15999,
+            rating: 4.3,
+            reviews: "19,800",
+            category: "Mobiles",
+          },
+          {
+            id: "moto-g14",
+            image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+            brand: "Motorola",
+            title: "Motorola g14 (Sky Blue, 128 GB) (4 GB RAM)",
+            price: 8999,
+            mrp: 12999,
+            rating: 4.2,
+            reviews: "14,200",
+            category: "Mobiles",
+          },
+        ],
+      },
+      {
+        id: "flagship-phones",
+        title: "Flagship Phones",
+        subtitle: "Premium performance & ultra cameras",
+        products: [
+          {
+            id: "nexon-pro-max",
+            image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+            brand: "Nexon",
+            title: "Nexon Pro Max Flagship 5G (12GB RAM, 256GB)",
+            price: 39999,
+            mrp: 49999,
+            rating: 4.6,
+            reviews: "22,810",
+            category: "Mobiles",
+          },
+          {
+            id: "iphone-15-pro",
+            image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80",
+            brand: "Apple",
+            title: "Apple iPhone 15 Pro (128 GB) - Natural Titanium",
+            price: 129900,
+            mrp: 134900,
+            rating: 4.8,
+            reviews: "15,400",
+            category: "Mobiles",
+          },
+          {
+            id: "galaxy-s24-ultra",
+            image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+            brand: "Samsung",
+            title: "Samsung Galaxy S24 Ultra 5G (Titanium Gray, 256 GB)",
+            price: 129999,
+            mrp: 144999,
+            rating: 4.7,
+            reviews: "12,900",
+            category: "Mobiles",
+          },
+          {
+            id: "nexon-flip-5g",
+            image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+            brand: "Nexon",
+            title: "Nexon Fold & Flip 5G Smartphone Dual AMOLED",
+            price: 69999,
+            mrp: 89999,
+            rating: 4.5,
+            reviews: "9,120",
+            category: "Mobiles",
+          },
+        ],
+      },
+      {
+        id: "gaming-phones",
+        title: "Gaming Phones",
+        subtitle: "High refresh rate & cooling tech",
+        products: [
+          {
+            id: "rog-phone-7",
+            image: "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?auto=format&fit=crop&w=600&q=80",
+            brand: "ASUS",
+            title: "ASUS ROG Phone 7 Ultimate 165Hz AMOLED",
+            price: 74999,
+            mrp: 89999,
+            rating: 4.7,
+            reviews: "8,340",
+            category: "Mobiles",
+          },
+          {
+            id: "iqoo-11-5g",
+            image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=600&q=80",
+            brand: "iQOO",
+            title: "iQOO 11 5G (Legend, 16GB RAM, 256GB)",
+            price: 54999,
+            mrp: 61999,
+            rating: 4.6,
+            reviews: "11,200",
+            category: "Mobiles",
+          },
+        ],
+      },
+    ],
+  },
+
+  electronics: {
+    slug: "electronics",
+    name: "Electronics & Gadgets",
+    description: "Upgrade your gear with laptops, headphones, smartwatches & home audio.",
+    bannerImage: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "audio-devices",
+        title: "Audio Devices",
+        subtitle: "Wireless earbuds, headphones & soundbars",
+        products: [
+          {
+            id: "pulseform-buds",
+            image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+            brand: "Pulseform",
+            title: "Pulseform Beat 40 Wireless Earbuds, 40h Playback",
+            price: 1099,
+            mrp: 3499,
+            rating: 4.2,
+            reviews: "52,908",
+            category: "Electronics",
+          },
+          {
+            id: "sony-wh-1000xm5",
+            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+            brand: "Sony",
+            title: "Sony WH-1000XM5 Noise Cancelling Headphones",
+            price: 29990,
+            mrp: 34990,
+            rating: 4.8,
+            reviews: "14,500",
+            category: "Electronics",
+          },
+          {
+            id: "jbl-flip-6",
+            image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=600&q=80",
+            brand: "JBL",
+            title: "JBL Flip 6 Portable Waterproof Bluetooth Speaker",
+            price: 9999,
+            mrp: 13999,
+            rating: 4.6,
+            reviews: "26,100",
+            category: "Electronics",
+          },
+        ],
+      },
+      {
+        id: "laptops",
+        title: "Laptops & Computing",
+        subtitle: "Ultra-thin, gaming & work laptops",
+        products: [
+          {
+            id: "nexon-air-14",
+            image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80",
+            brand: "Nexon",
+            title: "Nexon Air 14 Thin & Light Laptop (16GB, 512GB SSD)",
+            price: 54990,
+            mrp: 72990,
+            rating: 4.4,
+            reviews: "12,480",
+            category: "Electronics",
+          },
+          {
+            id: "macbook-air-m2",
+            image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+            brand: "Apple",
+            title: "Apple MacBook Air M2 Chip (8GB, 256GB SSD) - Starlight",
+            price: 94990,
+            mrp: 114900,
+            rating: 4.8,
+            reviews: "32,100",
+            category: "Electronics",
+          },
+          {
+            id: "hp-victus-gaming",
+            image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80",
+            brand: "HP",
+            title: "HP Victus Gaming Laptop AMD Ryzen 7, RTX 4050",
+            price: 78990,
+            mrp: 96990,
+            rating: 4.5,
+            reviews: "9,800",
+            category: "Electronics",
+          },
+        ],
+      },
+      {
+        id: "televisions",
+        title: "Televisions",
+        subtitle: "Smart 4K Ultra HD TVs",
+        products: [
+          {
+            id: "nexon-4k-tv",
+            image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80",
+            brand: "Nexon",
+            title: "Nexon 55-inch Ultra HD 4K Smart LED TV with Dolby",
+            price: 32999,
+            mrp: 45999,
+            rating: 4.5,
+            reviews: "14,320",
+            category: "Electronics",
+          },
+          {
+            id: "lg-oled-55",
+            image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=600&q=80",
+            brand: "LG",
+            title: "LG 55 inch OLED 4K Smart TV Cinema HDR",
+            price: 99990,
+            mrp: 139990,
+            rating: 4.7,
+            reviews: "8,900",
+            category: "Electronics",
+          },
+        ],
+      },
+      {
+        id: "accessories",
+        title: "Accessories & Smartwatches",
+        subtitle: "Smartwatches, powerbanks & cables",
+        products: [
+          {
+            id: "pulseform-active-2",
+            image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
+            brand: "Pulseform",
+            title: "Pulseform Active 2 Smartwatch with AMOLED Display",
+            price: 2199,
+            mrp: 5999,
+            rating: 4.2,
+            reviews: "38,102",
+            category: "Electronics",
+          },
+          {
+            id: "ankerg-powerbank",
+            image: "https://images.unsplash.com/photo-1609592424109-dd9892f1b177?auto=format&fit=crop&w=600&q=80",
+            brand: "Anker",
+            title: "Anker 20000mAh 22.5W Fast Charging Power Bank",
+            price: 2499,
+            mrp: 3999,
+            rating: 4.6,
+            reviews: "19,400",
+            category: "Electronics",
+          },
+        ],
+      },
+    ],
+  },
+
+  beauty: {
+    slug: "beauty",
+    name: "Beauty & Personal Care",
+    description: "Discover luxury skincare, makeup, perfumes & grooming essentials.",
+    bannerImage: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "skincare",
+        title: "Skincare",
+        subtitle: "Serums, moisturizers & sunscreens",
+        products: [
+          {
+            id: "pureglow-serum",
+            image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80",
+            brand: "PureGlow",
+            title: "PureGlow Vitamin C Face Serum 30ml with Hyaluronic Acid",
+            price: 499,
+            mrp: 999,
+            rating: 4.4,
+            reviews: "21,090",
+            category: "Beauty",
+          },
+          {
+            id: "cerave-moisturizer",
+            image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80",
+            brand: "CeraVe",
+            title: "CeraVe Hydrating Facial Cleanser & Moisturizing Cream",
+            price: 1250,
+            mrp: 1600,
+            rating: 4.7,
+            reviews: "45,800",
+            category: "Beauty",
+          },
+        ],
+      },
+      {
+        id: "makeup",
+        title: "Makeup",
+        subtitle: "Lipsticks, foundations & eye makeup",
+        products: [
+          {
+            id: "maybelline-fit-me",
+            image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80",
+            brand: "Maybelline",
+            title: "Maybelline New York Fit Me Matte Foundation 30ml",
+            price: 449,
+            mrp: 649,
+            rating: 4.5,
+            reviews: "68,200",
+            category: "Beauty",
+          },
+          {
+            id: "mac-ruby-woo",
+            image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80",
+            brand: "M.A.C",
+            title: "M.A.C Retro Matte Lipstick - Ruby Woo",
+            price: 1950,
+            mrp: 2200,
+            rating: 4.8,
+            reviews: "14,300",
+            category: "Beauty",
+          },
+        ],
+      },
+      {
+        id: "haircare",
+        title: "Haircare",
+        subtitle: "Shampoos, oils & hair serums",
+        products: [
+          {
+            id: "loreal-hair-serum",
+            image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=600&q=80",
+            brand: "L'Oreal Paris",
+            title: "L'Oreal Paris Extraordinary Oil Hair Serum 100ml",
+            price: 499,
+            mrp: 650,
+            rating: 4.6,
+            reviews: "32,900",
+            category: "Beauty",
+          },
+        ],
+      },
+      {
+        id: "fragrances",
+        title: "Fragrances",
+        subtitle: "Luxury perfumes & body mists",
+        products: [
+          {
+            id: "davidoff-coolwater",
+            image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80",
+            brand: "Davidoff",
+            title: "Davidoff Cool Water Eau De Toilette For Men 125ml",
+            price: 3999,
+            mrp: 5400,
+            rating: 4.7,
+            reviews: "18,400",
+            category: "Beauty",
+          },
+        ],
+      },
+    ],
+  },
+
+  home: {
+    slug: "home",
+    name: "Home & Decor",
+    description: "Transform your living space with designer furniture, lighting & kitchenware.",
+    bannerImage: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "decor",
+        title: "Home Decor",
+        subtitle: "Wall art, carpets & planters",
+        products: [
+          {
+            id: "modern-wall-clock",
+            image: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=600&q=80",
+            brand: "Artisan",
+            title: "3D Wooden Geometric Wall Clock 16-inch",
+            price: 1299,
+            mrp: 2499,
+            rating: 4.4,
+            reviews: "8,900",
+            category: "Home",
+          },
+        ],
+      },
+      {
+        id: "kitchen",
+        title: "Kitchenware",
+        subtitle: "Cookware sets, dinnerware & bottles",
+        products: [
+          {
+            id: "cookcraft-pan",
+            image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80",
+            brand: "CookCraft",
+            title: "CookCraft Non-Stick Granite Cookware Set (3 Pieces)",
+            price: 1899,
+            mrp: 3999,
+            rating: 4.5,
+            reviews: "15,200",
+            category: "Home",
+          },
+        ],
+      },
+      {
+        id: "lighting",
+        title: "Lighting",
+        subtitle: "Floor lamps, chandeliers & LED strips",
+        products: [
+          {
+            id: "nordic-floor-lamp",
+            image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80",
+            brand: "Philips",
+            title: "Nordic Minimalist Wooden Floor Lamp with Fabric Shade",
+            price: 3499,
+            mrp: 5999,
+            rating: 4.6,
+            reviews: "4,120",
+            category: "Home",
+          },
+        ],
+      },
+    ],
+  },
+
+  appliances: {
+    slug: "appliances",
+    name: "Home Appliances",
+    description: "High performance air conditioners, fridges, washing machines & air fryers.",
+    bannerImage: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "washing-machines",
+        title: "Washing Machines",
+        subtitle: "Front load & top load automatic washers",
+        products: [
+          {
+            id: "ifb-front-load",
+            image: "https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?auto=format&fit=crop&w=600&q=80",
+            brand: "IFB",
+            title: "IFB 7 Kg 5 Star Fully Automatic Front Load Washing Machine",
+            price: 28990,
+            mrp: 34990,
+            rating: 4.6,
+            reviews: "11,400",
+            category: "Appliances",
+          },
+        ],
+      },
+      {
+        id: "refrigerators",
+        title: "Refrigerators",
+        subtitle: "Single door, double door & side-by-side fridges",
+        products: [
+          {
+            id: "samsung-double-door",
+            image: "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=600&q=80",
+            brand: "Samsung",
+            title: "Samsung 236L 3 Star Digital Inverter Double Door Refrigerator",
+            price: 24990,
+            mrp: 30990,
+            rating: 4.5,
+            reviews: "19,200",
+            category: "Appliances",
+          },
+        ],
+      },
+      {
+        id: "air-conditioners",
+        title: "Air Conditioners",
+        subtitle: "Inverter split & window ACs",
+        products: [
+          {
+            id: "daikin-split-ac",
+            image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=600&q=80",
+            brand: "Daikin",
+            title: "Daikin 1.5 Ton 5 Star Inverter Split AC 3D Airflow",
+            price: 44990,
+            mrp: 58900,
+            rating: 4.7,
+            reviews: "16,800",
+            category: "Appliances",
+          },
+        ],
+      },
+      {
+        id: "small-appliances",
+        title: "Small Appliances",
+        subtitle: "Air fryers, microwave ovens & mixer grinders",
+        products: [
+          {
+            id: "philips-air-fryer",
+            image: "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=600&q=80",
+            brand: "Philips",
+            title: "Philips Digital Air Fryer HD9252 4.1 Liter Capacity",
+            price: 8999,
+            mrp: 12999,
+            rating: 4.6,
+            reviews: "24,500",
+            category: "Appliances",
+          },
+        ],
+      },
+    ],
+  },
+
+  toys: {
+    slug: "toys",
+    name: "Toys & Baby Care",
+    description: "Action figures, educational toys, strollers & baby essentials.",
+    bannerImage: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "toys",
+        title: "Action Figures & Toys",
+        subtitle: "Hot Wheels, LEGO & board games",
+        products: [
+          {
+            id: "lego-classic-set",
+            image: "https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&w=600&q=80",
+            brand: "LEGO",
+            title: "LEGO Classic Creative Bricks 790 Piece Building Kit",
+            price: 2999,
+            mrp: 3999,
+            rating: 4.8,
+            reviews: "18,900",
+            category: "Toys & Baby",
+          },
+        ],
+      },
+      {
+        id: "baby-care",
+        title: "Baby Care",
+        subtitle: "Diapers, strollers & baby skin protection",
+        products: [
+          {
+            id: "pampers-diaper-pants",
+            image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80",
+            brand: "Pampers",
+            title: "Pampers Premium Care Diaper Pants (Monthly Pack - 128 pcs)",
+            price: 1899,
+            mrp: 2499,
+            rating: 4.7,
+            reviews: "31,400",
+            category: "Toys & Baby",
+          },
+        ],
+      },
+    ],
+  },
+
+  grocery: {
+    slug: "grocery",
+    name: "Grocery & Essentials",
+    description: "Fresh fruits, vegetables, staples, beverages & daily essentials.",
+    bannerImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "fruits-vegetables",
+        title: "Fruits & Vegetables",
+        subtitle: "Farm fresh organic produce",
+        products: [
+          {
+            id: "organic-apples-1kg",
+            image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
+            brand: "FarmFresh",
+            title: "Fresh Shimla Red Apples (1 kg)",
+            price: 189,
+            mrp: 240,
+            rating: 4.5,
+            reviews: "9,800",
+            category: "Grocery",
+          },
+        ],
+      },
+      {
+        id: "packaged-food",
+        title: "Packaged Food",
+        subtitle: "Snacks, cereals, oats & chocolates",
+        products: [
+          {
+            id: "quaker-oats-1kg",
+            image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=600&q=80",
+            brand: "Quaker",
+            title: "Quaker Rolled Oats 1kg Pouch with High Fiber",
+            price: 199,
+            mrp: 240,
+            rating: 4.6,
+            reviews: "42,100",
+            category: "Grocery",
+          },
+        ],
+      },
+    ],
+  },
+
+  sports: {
+    slug: "sports",
+    name: "Sports & Fitness",
+    description: "Cricket gear, fitness equipment, sportswear & outdoor sports items.",
+    bannerImage: "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "cricket",
+        title: "Cricket Equipment",
+        subtitle: "Kashmir willow bats, balls & protective pads",
+        products: [
+          {
+            id: "sg-cricket-bat",
+            image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=600&q=80",
+            brand: "SG",
+            title: "SG Sierra Kashmir Willow Full Size Cricket Bat",
+            price: 2499,
+            mrp: 3899,
+            rating: 4.5,
+            reviews: "12,900",
+            category: "Sports",
+          },
+        ],
+      },
+      {
+        id: "fitness",
+        title: "Fitness & Gym",
+        subtitle: "Dumbbells, resistance bands & yoga mats",
+        products: [
+          {
+            id: "boldfit-yoga-mat",
+            image: "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&w=600&q=80",
+            brand: "Boldfit",
+            title: "Boldfit TPE Anti-Skid Yoga Mat 6mm for Men & Women",
+            price: 799,
+            mrp: 1499,
+            rating: 4.6,
+            reviews: "28,300",
+            category: "Sports",
+          },
+        ],
+      },
+    ],
+  },
+
+  books: {
+    slug: "books",
+    name: "Books & Stationeries",
+    description: "Bestseller fiction, self-help, academic textbooks & competitive exam guides.",
+    bannerImage: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1400&q=80",
+    sections: [
+      {
+        id: "fiction",
+        title: "Fiction & Bestsellers",
+        subtitle: "Top rated novels & literature",
+        products: [
+          {
+            id: "atomic-habits-book",
+            image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80",
+            brand: "Penguin",
+            title: "Atomic Habits by James Clear (Hardcover Edition)",
+            price: 540,
+            mrp: 799,
+            rating: 4.9,
+            reviews: "105,400",
+            category: "Books",
+          },
+          {
+            id: "psychology-of-money",
+            image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80",
+            brand: "Jaico",
+            title: "The Psychology of Money by Morgan Housel",
+            price: 320,
+            mrp: 499,
+            rating: 4.8,
+            reviews: "84,200",
+            category: "Books",
+          },
+        ],
+      },
+      {
+        id: "education",
+        title: "Educational & Competitive",
+        subtitle: "NEET, JEE, UPSC & School textbooks",
+        products: [
+          {
+            id: "ncert-combo-class11",
+            image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80",
+            brand: "NCERT",
+            title: "NCERT Physics, Chemistry & Math Combo Class 11",
+            price: 890,
+            mrp: 1100,
+            rating: 4.7,
+            reviews: "29,100",
+            category: "Books",
+          },
+        ],
+      },
+    ],
+  },
+};
+
+export function getCategoryData(categorySlugOrName: string): CategoryPageData {
+  if (!categorySlugOrName) return categoryPagesData.mobiles;
+
+  const norm = decodeURIComponent(categorySlugOrName)
+    .toLowerCase()
+    .trim()
+    .replace(/ & /g, "-")
+    .replace(/ and /g, "-")
+    .replace(/\s+/g, "-");
+
+  const keyMap: Record<string, string> = {
+    mobiles: "mobiles",
+    mobile: "mobiles",
+    smartphones: "mobiles",
+
+    fashion: "fashion",
+    clothing: "fashion",
+    apparel: "fashion",
+
+    electronics: "electronics",
+    electronic: "electronics",
+
+    beauty: "beauty",
+    "beauty-personal-care": "beauty",
+
+    home: "home",
+    "home-decor": "home",
+
+    appliances: "appliances",
+    "home-appliances": "appliances",
+
+    toys: "toys",
+    "toys-baby": "toys",
+    "toys-&-baby": "toys",
+    "toys-and-baby": "toys",
+
+    grocery: "grocery",
+    groceries: "grocery",
+    "grocery-essentials": "grocery",
+
+    sports: "sports",
+    "sports-fitness": "sports",
+
+    books: "books",
+    "books-stationeries": "books",
+  };
+
+  const key =
+    keyMap[norm] ||
+    Object.keys(categoryPagesData).find((k) => norm.includes(k)) ||
+    "mobiles";
+
+  return categoryPagesData[key] || categoryPagesData.mobiles;
+}
+
+export function getAllProducts(): Product[] {
+  const catProducts = Object.values(categoryPagesData).flatMap((page) =>
+    page.sections.flatMap((sec) => sec.products)
+  );
+  const combined = [...baseProducts, ...catProducts];
+  return combined.filter(
+    (p, idx, self) => self.findIndex((item) => item.id === p.id) === idx
+  );
+}
+
+export function getProductById(id: string): Product {
+  const all = getAllProducts();
+  const found = all.find((p) => p.id === id);
+  if (found) return found;
+  return all[0];
+}

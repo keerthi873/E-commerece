@@ -102,8 +102,7 @@ export function ChatBot() {
         lower.includes("beauty") ||
         lower.includes("home") ||
         lower.includes("sports") ||
-        lower.includes("book") ||
-        lower.includes("furniture")
+        lower.includes("book")
       ) {
         const catName = lower.includes("beauty")
           ? "Beauty"
@@ -111,8 +110,6 @@ export function ChatBot() {
           ? "Home"
           : lower.includes("sports")
           ? "Sports"
-          : lower.includes("furniture")
-          ? "Furniture"
           : "Books";
 
         botMsg = {

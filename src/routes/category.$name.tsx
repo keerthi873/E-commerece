@@ -7,6 +7,17 @@ import { SiteFooter } from "@/components/store/SiteFooter";
 import { CartPanel } from "@/components/store/CartPanel";
 import { ChatBot } from "@/components/store/ChatBot";
 import { StoreProvider, useStore } from "@/components/store/store-context";
+import { MobileSection } from "@/components/store/MobileSection";
+import { FashionSection } from "@/components/store/FashionSection";
+import { ElectronicsSection } from "@/components/store/ElectronicsSection";
+
+import { BeautySection } from "@/components/store/BeautySection";
+import { HomeSection } from "@/components/store/HomeSection";
+import { AppliancesSection } from "@/components/store/AppliancesSection";
+import { ToysGiftsSection } from "@/components/store/ToysGiftsSection";
+import { GrocerySection } from "@/components/store/GrocerySection";
+import { SportsSection } from "@/components/store/SportsSection";
+import { BooksSection } from "@/components/store/BooksSection";
 
 export const Route = createFileRoute("/category/$name")({
   component: CategoryRoute,
@@ -26,7 +37,7 @@ function CategoryPage() {
   const { name } = Route.useParams();
   const { query } = useStore();
 
-  // Decode category name from URL param (e.g., "Toys%20%26%20Baby" -> "Toys & Baby")
+  // Decode category name from URL param
   const decodedCategory = React.useMemo(() => {
     try {
       return decodeURIComponent(name);
@@ -35,19 +46,141 @@ function CategoryPage() {
     }
   }, [name]);
 
+  const catLower = decodedCategory.toLowerCase();
+
+  // Compute category products unconditionally BEFORE any conditional returns (Rules of Hooks)
   const categoryProducts = React.useMemo(() => {
     const q = query.trim().toLowerCase();
     return products.filter((p) => {
-      const matchCat =
-        p.category.toLowerCase() === decodedCategory.toLowerCase() ||
-        (decodedCategory.toLowerCase() === "fashion" && p.category === "Fashion");
+      const matchCat = p.category.toLowerCase() === catLower;
       const matchQuery =
         !q ||
         p.title.toLowerCase().includes(q) ||
         p.brand.toLowerCase().includes(q);
       return matchCat && matchQuery;
     });
-  }, [decodedCategory, query]);
+  }, [catLower, query]);
+
+  // Unified Section Delegation for Mobiles, Fashion, Electronics, Beauty, Home, Appliances, Toys/Gifts, Grocery, Sports & Books
+  if (catLower === "mobiles") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <MobileSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "fashion") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <FashionSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "electronics") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <ElectronicsSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "beauty") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <BeautySection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "home") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <HomeSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "appliances") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <AppliancesSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "toys" || catLower === "toys & gifts" || catLower === "toys & baby" || catLower === "gifts" || catLower === "toys-gifts") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <ToysGiftsSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "grocery" || catLower === "grocery & essentials") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <GrocerySection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "sports" || catLower === "sports & fitness") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <SportsSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (catLower === "books" || catLower === "books & stationery" || catLower === "stationery") {
+    return (
+      <div className="min-h-screen bg-background font-sans">
+        <SiteHeader />
+        <main>
+          <BooksSection />
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background font-sans">

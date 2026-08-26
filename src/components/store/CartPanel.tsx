@@ -1,4 +1,5 @@
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
   Sheet,
@@ -105,18 +106,21 @@ export function CartPanel() {
                   </p>
                 )}
               </div>
-              <button
+              <Link
+                to="/checkout"
                 onClick={() => {
-                  toast.success("Order placed", {
-                    description: `${cartCount} item(s) · ${inr(cartTotal)} · arriving in 3 days`,
-                  });
-                  clearCart();
                   setCartOpen(false);
+                  try {
+                    if (typeof window !== "undefined") {
+                      window.localStorage.removeItem("buyNowProduct");
+                    }
+                  } catch {}
+                  window.scrollTo({ top: 0, behavior: "instant" });
                 }}
-                className="w-full bg-accent px-4 py-3 text-sm font-bold text-accent-foreground hover:opacity-90"
+                className="w-full bg-accent px-4 py-3 text-center text-sm font-bold text-accent-foreground hover:opacity-90 block rounded-md shadow-xs cursor-pointer"
               >
-                Place order
-              </button>
+                Proceed to Checkout
+              </Link>
               <button
                 onClick={clearCart}
                 className="w-full border border-border px-4 py-2 text-sm font-medium text-foreground hover:border-brand"

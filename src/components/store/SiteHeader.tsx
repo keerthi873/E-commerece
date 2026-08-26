@@ -12,6 +12,7 @@ import {
   Camera,
   Heart,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -110,12 +111,12 @@ export function SiteHeader() {
     <header className="sticky top-0 z-30">
       <div className="bg-brand text-primary-foreground">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-3 px-4 py-2.5">
-          <a href="/" className="flex items-baseline gap-1.5">
+          <Link to="/" className="flex items-baseline gap-1.5">
             <span className="rounded-sm bg-accent px-2 py-0.5 text-lg font-black italic tracking-tight text-accent-foreground">
               Kartly
             </span>
             <span className="hidden text-[11px] italic opacity-80 sm:inline">Explore Plus</span>
-          </a>
+          </Link>
 
           <form
             className="order-3 flex min-w-0 flex-1 items-center gap-2 rounded-sm bg-card px-3 py-2 md:order-none"
@@ -214,20 +215,65 @@ export function SiteHeader() {
               </button>
             )}
 
-            <button
-              onClick={() =>
-                toast("Seller onboarding", {
-                  description: "Kartly Seller Hub opens for new partners next week.",
-                })
-              }
-              className="hidden items-center gap-1.5 transition-opacity hover:opacity-80 sm:flex"
-            >
-              <Store className="size-4" />
-              Become a Seller
-            </button>
+            {/* 8 ROLE PORTALS DROPDOWN */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-md bg-accent/20 px-3 py-1.5 text-xs font-bold text-accent transition-colors hover:bg-accent/30 cursor-pointer">
+                <Store className="size-4" />
+                <span>All Portals (8 Roles)</span>
+                <ChevronDown className="size-3.5 opacity-70" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link to="/portals" className="font-extrabold text-brand cursor-pointer">
+                    🌐 Portals Hub (Directory)
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/customer/dashboard" className="cursor-pointer">
+                    👤 Customer Portal
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/seller/dashboard" className="cursor-pointer">
+                    🏪 Seller Portal
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/admin/dashboard" className="cursor-pointer">
+                    🛡️ Admin Portal
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/super-admin/dashboard" className="cursor-pointer">
+                    👑 Super Admin Portal
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/warehouse/dashboard" className="cursor-pointer">
+                    📦 Warehouse Staff
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/delivery/dashboard" className="cursor-pointer">
+                    🚚 Delivery Partner
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/support/dashboard" className="cursor-pointer">
+                    🎧 Customer Support
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/finance/dashboard" className="cursor-pointer">
+                    💰 Finance Team
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-            <a
-              href="/wishlist"
+            <Link
+              to="/wishlist"
               className="relative flex items-center gap-1.5 transition-opacity hover:opacity-80"
               title="View Wishlist"
             >
@@ -238,7 +284,7 @@ export function SiteHeader() {
                   {wishlist.length}
                 </span>
               )}
-            </a>
+            </Link>
 
             <button
               onClick={() => setCartOpen(true)}
@@ -278,12 +324,30 @@ export function SiteHeader() {
                 ? "/"
                 : c === "Fashion"
                 ? "/fashion"
+                : c === "Mobiles"
+                ? "/mobiles"
+                : c === "Electronics"
+                ? "/electronics"
+                : c === "Beauty"
+                ? "/beauty"
+                : c === "Home"
+                ? "/home"
+                : c === "Appliances"
+                ? "/appliances"
+                : c === "Toys & Gifts" || c === "Toys & Baby"
+                ? "/toys-gifts"
+                : c === "Grocery"
+                ? "/grocery"
+                : c === "Sports"
+                ? "/sports"
+                : c === "Books & Stationery" || c === "Books"
+                ? "/books"
                 : `/category/${encodeURIComponent(c)}`;
 
             return (
               <li key={c}>
-                <a
-                  href={targetPath}
+                <Link
+                  to={targetPath}
                   onClick={() => {
                     setCategory(c);
                   }}
@@ -296,7 +360,7 @@ export function SiteHeader() {
                   }
                 >
                   {c}
-                </a>
+                </Link>
               </li>
             );
           })}

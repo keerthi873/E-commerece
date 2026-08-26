@@ -127,14 +127,22 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+import { StoreProvider } from "@/components/store/store-context";
+import { CartPanel } from "@/components/store/CartPanel";
+import { ChatBot } from "@/components/store/ChatBot";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-      <Toaster position="bottom-center" />
+      <StoreProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <CartPanel />
+        <ChatBot />
+        <Toaster position="bottom-center" />
+      </StoreProvider>
     </QueryClientProvider>
   );
 }

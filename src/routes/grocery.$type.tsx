@@ -1,0 +1,11 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { GrocerySection } from "@/components/store/GrocerySection";
+
+export const Route = createFileRoute("/grocery/$type")({
+  component: GroceryTypeRoute,
+});
+
+function GroceryTypeRoute() {
+  const { type } = Route.useParams();
+  return <GrocerySection selectedType={type} />;
+}
