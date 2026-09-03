@@ -1,13 +1,27 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
-import { ArrowLeft, Star, Heart, Check, Truck, RotateCcw, ShieldCheck, Tag, ShoppingCart, Zap, CheckCircle2 } from "lucide-react";
-import { products, inr } from "@/components/store/catalog";
+import {
+  ArrowLeft,
+  Star,
+  Heart,
+  Check,
+  Truck,
+  RotateCcw,
+  ShieldCheck,
+  Zap,
+  Tag,
+  CreditCard,
+  MapPin,
+  CheckCircle2,
+  ShoppingCart,
+} from "lucide-react";
+import { products, inr, type Product } from "@/components/store/catalog";
+import { ProductCard } from "@/components/store/ProductCard";
 import { StoreProvider, useStore } from "@/components/store/store-context";
 import { SiteHeader } from "@/components/store/SiteHeader";
 import { SiteFooter } from "@/components/store/SiteFooter";
 import { CartPanel } from "@/components/store/CartPanel";
 import { ChatBot } from "@/components/store/ChatBot";
-import { ProductCard } from "@/components/store/ProductCard";
 
 export const Route = createFileRoute("/product/$id")({
   component: ProductDetailRoute,
@@ -25,12 +39,23 @@ function ProductDetailRoute() {
 
 function ProductDetailPage() {
   const { id } = Route.useParams();
-  const { addToCart, buyNow, wishlist, toggleWishlist, addRecentlyViewed } = useStore();
-  const [selectedSize, setSelectedSize] = React.useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = React.useState<string | null>(null);
-  const [addedToCartToast, setAddedToCartToast] = React.useState(false);
+  const navigate = useNavigate();
+  const {
+    addToCart,
+    buyNow,
+    wishlist,
+    toggleWishlist,
+    addRecentlyViewed,
+    pincode,
+    setPincode,
+    user,
+    openAuthModal,
+  } = useStore();
 
   const product = products.find((p) => p.id === id) || products[0];
+
+  const [selectedSize, setSelectedSize] = React.useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (product) {
@@ -44,86 +69,51 @@ function ProductDetailPage() {
     }
   }, [product, addRecentlyViewed]);
 
+  const [activeImage, setActiveImage] = React.useState(product.image);
+  const [pincodeCheckInput, setPincodeCheckInput] = React.useState(pincode || "500034");
+  const [pincodeStatus, setPincodeStatus] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    setActiveImage(product.image);
+  }, [product]);
+
   const saved = wishlist.includes(product.id);
   const off = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+  const emiPerMonth = Math.round(product.price / 6);
 
-  const navigate = useNavigate();
-
-  const handleAddToCart = (targetProduct?: typeof product) => {
-    const p = targetProduct || product;
-    if (!p) return;
-
-    try {
-      let cartData = typeof window !== "undefined" ? localStorage.getItem("cartItems") : null;
-      let cart = cartData ? JSON.parse(cartData) : [];
-
-      if (!Array.isArray(cart)) {
-        cart = [];
-      }
-
-      const itemToAdd = {
-        id: p.id,
-        name: p.title || (p as any).name,
-        title: p.title || (p as any).name,
-        price: p.price,
-        mrp: p.mrp || p.price,
-        brand: p.brand || "",
-        image: p.image,
-        category: p.category || "general",
-        qty: 1,
-      };
-
-      const foundIndex = cart.findIndex((i: any) =>
-        i.product ? i.product.id === p.id : i.id === p.id
-      );
-
-      if (foundIndex >= 0) {
-        if (cart[foundIndex].qty) {
-          cart[foundIndex].qty += 1;
-        } else {
-          cart[foundIndex].qty = 2;
-        }
-      } else {
-        cart.push(itemToAdd);
-      }
-
-      if (typeof window !== "undefined") {
-        localStorage.setItem("cartItems", JSON.stringify(cart));
-        localStorage.setItem("antigravity_cart", JSON.stringify(cart));
-      }
-
-      addToCart(p);
-      toast.success("Item added to cart", { description: p.title || (p as any).name });
-    } catch (error) {
-      console.error(error);
-      toast.error("Error adding to cart");
+  const handlePincodeCheck = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pincodeCheckInput.length === 6) {
+      setPincode(pincodeCheckInput);
+      setPincodeStatus(`Delivery available to ${pincodeCheckInput} (Express delivery by tomorrow)`);
+    } else {
+      setPincodeStatus("Please enter a valid 6-digit pincode.");
     }
   };
 
   const handleBuyNow = () => {
-    if (!product) return;
-    buyNow(product);
-    try {
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem("buyNowProduct", JSON.stringify({ product, qty: 1 }));
-      }
-    } catch (e) {
-      console.error("Error setting buyNowProduct in localStorage", e);
+    if (!user || !user.isAuth) {
+      openAuthModal("Please log in to purchase this product.");
+      return;
     }
+    buyNow(product);
     navigate({ to: "/checkout" });
   };
 
-  // STRICT RELATED PRODUCTS FILTERING (NO CATEGORY MIXING)
-  const relatedProducts = React.useMemo(() => {
+  const galleryImages = [
+    product.image,
+    "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+  ];
+
+  const similarProducts = React.useMemo(() => {
     return products
-      .filter((p) => {
-        if (p.id === product.id) return false;
-        if (product.fashionCategory) {
-          return p.fashionCategory === product.fashionCategory;
-        }
-        return p.category === product.category;
-      })
-      .slice(0, 5);
+      .filter(
+        (p) =>
+          p.id !== product.id &&
+          (p.category === product.category || p.subCategory === product.subCategory)
+      )
+      .slice(0, 6);
   }, [product]);
 
   return (
@@ -131,80 +121,92 @@ function ProductDetailPage() {
       <SiteHeader />
 
       <main className="mx-auto max-w-[1400px] px-4 py-6 space-y-8">
-        {/* Breadcrumb / Back Link */}
-        <div className="flex items-center justify-between">
-          <Link
-            to={product.fashionCategory ? `/fashion/${product.fashionCategory}` : "/"}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-pink-600 transition-colors"
-          >
-            <ArrowLeft className="size-4" />
-            <span>Back to {product.fashionCategory ? `${product.fashionCategory.toUpperCase()}'S Store` : "Catalog"}</span>
-          </Link>
+        {/* Back Link */}
+        <Link
+          to="/category/$name"
+          params={{ name: product.category }}
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-brand transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="size-4" />
+          Back to {product.category}
+        </Link>
 
-          {addedToCartToast && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-600 text-white font-bold text-xs shadow-md animate-in fade-in">
-              <CheckCircle2 className="size-4" /> Added to Bag!
-            </span>
-          )}
-        </div>
+        {/* Product Details Grid */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
+          {/* Left Column: Image Gallery (5 cols) */}
+          <div className="lg:col-span-5 space-y-4 sticky top-20">
+            <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm">
+              <img
+                src={activeImage}
+                alt={product.title}
+                className="size-full object-contain transition-all duration-300"
+              />
 
-        {/* Product Main Detail Container */}
-        <div className="grid gap-8 md:grid-cols-2 border border-border bg-card p-6 md:p-8 shadow-xs rounded-3xl">
-          {/* Left: Product Image */}
-          <div className="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-border flex items-center justify-center">
-            <img
-              src={product.image}
-              alt={product.title}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "https://picsum.photos/600?fallback";
-              }}
-              className="size-full object-contain transition-transform duration-500 hover:scale-105"
-            />
-            <button
-              onClick={() => toggleWishlist(product)}
-              aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
-              className="absolute right-4 top-4 bg-card/90 backdrop-blur-xs p-3 rounded-full text-muted-foreground hover:text-pink-600 shadow-md cursor-pointer transition-colors"
-            >
-              <Heart className={"size-6 " + (saved ? "fill-pink-600 text-pink-600" : "")} />
-            </button>
+              {/* Wishlist Button Overlay */}
+              <button
+                onClick={() => toggleWishlist(product)}
+                className="absolute right-4 top-4 rounded-full bg-background/80 p-2 text-muted-foreground backdrop-blur-xs hover:bg-background hover:text-brand shadow-sm transition-all cursor-pointer"
+                title={saved ? "Remove from Wishlist" : "Add to Wishlist"}
+              >
+                <Heart className={"size-5 " + (saved ? "fill-pink-600 text-pink-600" : "")} />
+              </button>
+            </div>
+
+            {/* Thumbnail switcher */}
+            <div className="flex gap-2">
+              {galleryImages.map((imgUrl, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImage(imgUrl)}
+                  className={`aspect-square size-16 overflow-hidden rounded-md border p-1 bg-muted cursor-pointer transition-all ${
+                    activeImage === imgUrl
+                      ? "border-brand ring-2 ring-brand"
+                      : "border-border hover:border-brand/60"
+                  }`}
+                >
+                  <img src={imgUrl} alt="Thumbnail" className="size-full object-contain" />
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Right: Details & Action Buttons */}
-          <div className="flex flex-col justify-between space-y-6">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black uppercase tracking-wider text-pink-600 px-3 py-1 rounded-full bg-pink-50 dark:bg-pink-950/40 border border-pink-200 dark:border-pink-900">
-                  {product.fashionCategory ? `${product.fashionCategory.toUpperCase()}'S COLLECTION` : product.category}
-                </span>
-                <span className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
+          {/* Right Column: Title, Offers, Pincode & Action Buttons (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-5">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                   {product.brand}
                 </span>
+                {product.isBestseller && (
+                  <span className="bg-amber-500 text-black text-[10px] font-extrabold px-2 py-0.5 rounded uppercase">
+                    Bestseller
+                  </span>
+                )}
               </div>
 
-              <h1 className="text-2xl md:text-3xl font-black text-foreground tracking-tight leading-snug">
+              <h1 className="mt-1 text-xl font-extrabold text-foreground leading-snug">
                 {product.title}
               </h1>
 
-              <div className="flex items-center gap-2 text-xs">
-                <span className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2.5 py-1 font-bold text-white text-xs shadow-xs">
+              <div className="mt-2.5 flex items-center gap-3 text-xs">
+                <span className="inline-flex items-center gap-1 rounded bg-emerald-600 px-2 py-0.5 font-bold text-white shadow-2xs">
                   {product.rating.toFixed(1)}
                   <Star className="size-3.5 fill-current" />
                 </span>
-                <span className="text-muted-foreground font-medium">({product.reviews} verified reviews)</span>
+                <span className="text-muted-foreground font-semibold">({product.reviews} customer ratings)</span>
               </div>
             </div>
 
-            {/* Price Row */}
-            <div className="flex items-baseline gap-3 border-y border-border py-4">
-              <span className="text-3xl md:text-4xl font-black text-foreground">
-                {inr(product.price)}
-              </span>
-              <span className="text-sm md:text-base text-muted-foreground line-through font-medium">
-                {inr(product.mrp)}
-              </span>
-              <span className="text-sm font-black text-pink-600 bg-pink-50 dark:bg-pink-950/40 px-3 py-1 rounded-md border border-pink-200 dark:border-pink-900">
-                {off}% OFF
-              </span>
+            {/* Price & Discounts */}
+            <div className="rounded-lg bg-muted/30 p-4 border border-border space-y-1">
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <span className="text-3xl font-black text-foreground">{inr(product.price)}</span>
+                <span className="text-sm text-muted-foreground line-through">{inr(product.mrp)}</span>
+                <span className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">
+                  {off}% OFF
+                </span>
+              </div>
+              <p className="text-[11px] text-muted-foreground font-medium">Inclusive of all taxes</p>
             </div>
 
             {/* Available Sizes if Fashion */}
@@ -222,8 +224,8 @@ function ProductDetailPage() {
                       className={
                         "px-4 py-2 border rounded-xl text-xs font-extrabold cursor-pointer transition-all " +
                         (selectedSize === sz
-                          ? "bg-pink-600 border-pink-600 text-white shadow-md scale-105"
-                          : "border-border bg-background text-foreground hover:border-pink-500")
+                          ? "bg-brand border-brand text-primary-foreground shadow-md scale-105"
+                          : "border-border bg-background text-foreground hover:border-brand")
                       }
                     >
                       {sz}
@@ -233,64 +235,142 @@ function ProductDetailPage() {
               </div>
             )}
 
-            {/* Stock & Guarantee Badges */}
-            <div className="space-y-2 text-xs text-muted-foreground font-medium pt-2">
-              <p className="flex items-center gap-2">
-                <Check className="size-4 text-emerald-600" />
-                <span className="font-bold text-foreground">In Stock & Ready for Immediate Dispatch</span>
+            {/* Bank Offers & EMI Box */}
+            <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3.5 space-y-2 text-xs">
+              <h3 className="font-extrabold text-amber-700 dark:text-amber-400 flex items-center gap-1.5 uppercase text-[11px] tracking-wider">
+                <Tag className="size-3.5" />
+                Available Offers & Bank Discounts
+              </h3>
+              <ul className="space-y-1 text-foreground/90 font-medium">
+                <li className="flex items-center gap-1.5">
+                  <Check className="size-3.5 text-amber-600 shrink-0" />
+                  <span><strong>Bank Offer:</strong> 10% Instant Discount on HDFC Credit Card EMI transactions.</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CreditCard className="size-3.5 text-amber-600 shrink-0" />
+                  <span><strong>No Cost EMI:</strong> Available starting from <strong>{inr(emiPerMonth)}/month</strong> for 6 months.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Pincode Availability Checker */}
+            <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+              <label className="block text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                <MapPin className="size-3.5 text-brand" />
+                Check Delivery & Pincode
+              </label>
+              <form onSubmit={handlePincodeCheck} className="flex gap-2 max-w-sm">
+                <input
+                  type="text"
+                  maxLength={6}
+                  value={pincodeCheckInput}
+                  onChange={(e) => setPincodeCheckInput(e.target.value.replace(/\D/g, ""))}
+                  placeholder="Enter 6-digit Pincode"
+                  className="flex-1 rounded border border-border bg-background px-3 py-1.5 text-xs text-foreground focus:border-brand focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className="rounded bg-brand px-4 py-1.5 text-xs font-bold text-primary-foreground hover:bg-brand-deep cursor-pointer"
+                >
+                  Check
+                </button>
+              </form>
+              {pincodeStatus && (
+                <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mt-1">
+                  <CheckCircle2 className="size-3.5" />
+                  {pincodeStatus}
+                </p>
+              )}
+            </div>
+
+            {/* Guarantees List */}
+            <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground border-y border-border py-3">
+              <p className="flex items-center gap-2 font-medium">
+                <Check className="size-4 text-emerald-500" />
+                In Stock & Fast Delivery
               </p>
-              <p className="flex items-center gap-2">
-                <Truck className="size-4 text-pink-600" />
-                <span>Free Express Doorstep Delivery within 24-48 Hours</span>
+              <p className="flex items-center gap-2 font-medium">
+                <Truck className="size-4 text-brand" />
+                Free Shipping over ₹500
               </p>
-              <p className="flex items-center gap-2">
-                <RotateCcw className="size-4 text-pink-600" />
-                <span>7 Days Easy Return & Exchange Guarantee</span>
+              <p className="flex items-center gap-2 font-medium">
+                <RotateCcw className="size-4 text-brand" />
+                7 Days Return Policy
               </p>
-              <p className="flex items-center gap-2">
-                <ShieldCheck className="size-4 text-pink-600" />
-                <span>100% Verified Authentic Product Quality</span>
+              <p className="flex items-center gap-2 font-medium">
+                <ShieldCheck className="size-4 text-brand" />
+                1 Year Brand Warranty
               </p>
             </div>
 
-            {/* 🟢 ADD TO CART & 🟡 BUY NOW BUTTONS (ONLY ON DETAILS PAGE) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border">
-              {/* 🟢 ADD TO CART BUTTON */}
+            {/* Action Buttons: Add to Cart & Buy Now */}
+            <div className="flex gap-3 pt-2">
               <button
-                type="button"
-                onClick={() => handleAddToCart(product)}
-                className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 px-6 rounded-2xl font-black text-xs uppercase tracking-wider shadow-lg transition-all hover:scale-[1.02] cursor-pointer"
+                onClick={() => addToCart(product)}
+                className="flex-1 rounded-lg border-2 border-brand bg-card py-3 text-xs font-extrabold uppercase tracking-wider text-brand hover:bg-brand/10 transition-all cursor-pointer shadow-2xs flex items-center justify-center gap-2"
               >
                 <ShoppingCart className="size-4" />
-                <span>Add To Cart</span>
+                Add to Cart
               </button>
-
-              {/* 🟡 BUY NOW BUTTON */}
               <button
-                type="button"
                 onClick={handleBuyNow}
-                className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 py-3.5 px-6 rounded-2xl font-black text-xs uppercase tracking-wider shadow-lg transition-all hover:scale-[1.02] cursor-pointer"
+                className="flex-1 rounded-lg bg-brand py-3 text-xs font-extrabold uppercase tracking-wider text-primary-foreground hover:bg-brand-deep transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
               >
                 <Zap className="size-4 fill-current" />
-                <span>Buy Now</span>
+                Buy Now
               </button>
             </div>
           </div>
         </div>
 
-        {/* RELATED PRODUCTS SECTION */}
-        {relatedProducts.length > 0 && (
-          <div className="space-y-4 pt-6 border-t border-border">
-            <div className="flex items-center gap-2">
-              <Tag className="size-5 text-pink-600" />
-              <h2 className="text-xl font-black uppercase text-foreground tracking-tight">
-                Similar Products in {product.fashionCategory ? `${product.fashionCategory.toUpperCase()}'S` : product.category}
-              </h2>
+        {/* Product Specifications Table */}
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm space-y-4">
+          <h2 className="text-base font-extrabold text-foreground border-b border-border pb-2">
+            Product Specifications
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-xs">
+            <div className="flex justify-between border-b border-border/60 pb-1.5">
+              <span className="text-muted-foreground font-medium">Brand</span>
+              <span className="font-bold text-foreground">{product.brand}</span>
             </div>
+            <div className="flex justify-between border-b border-border/60 pb-1.5">
+              <span className="text-muted-foreground font-medium">Category</span>
+              <span className="font-bold text-foreground">{product.category}</span>
+            </div>
+            {product.subCategory && (
+              <div className="flex justify-between border-b border-border/60 pb-1.5">
+                <span className="text-muted-foreground font-medium">Sub-Category</span>
+                <span className="font-bold text-foreground capitalize">{product.subCategory}</span>
+              </div>
+            )}
+            {product.color && (
+              <div className="flex justify-between border-b border-border/60 pb-1.5">
+                <span className="text-muted-foreground font-medium">Color</span>
+                <span className="font-bold text-foreground">{product.color}</span>
+              </div>
+            )}
+            {product.sizes && (
+              <div className="flex justify-between border-b border-border/60 pb-1.5">
+                <span className="text-muted-foreground font-medium">Available Sizes</span>
+                <span className="font-bold text-foreground">{product.sizes.join(", ")}</span>
+              </div>
+            )}
+            <div className="flex justify-between border-b border-border/60 pb-1.5">
+              <span className="text-muted-foreground font-medium">Warranty</span>
+              <span className="font-bold text-foreground">1 Year Manufacturer Warranty</span>
+            </div>
+          </div>
+        </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {relatedProducts.map((p) => (
-                <ProductCard key={p.id} product={p} />
+        {/* Similar Products Recommendation Grid */}
+        {similarProducts.length > 0 && (
+          <div className="space-y-4">
+            <div className="border-b-2 border-brand pb-2">
+              <h2 className="text-lg font-bold text-foreground">Similar Products You May Like</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-3.5 md:grid-cols-3 lg:grid-cols-6">
+              {similarProducts.map((p) => (
+                <ProductCard key={p.id} product={p} badgeLabel="Similar" />
               ))}
             </div>
           </div>

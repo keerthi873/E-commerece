@@ -1,8 +1,109 @@
 import * as React from "react";
 import { toast } from "sonner";
 import { products, type Product } from "./catalog";
+import type {
+  Address,
+  Coupon,
+  Order,
+  OrderStatus,
+  PaymentDetails,
+  UserProfile,
+} from "./types";
 
 export type CartLine = { product: Product; qty: number };
+
+export const DEFAULT_USER: UserProfile = {
+  name: "Kartly Demo User",
+  email: "demo@kartly.com",
+  phone: "9999999999",
+  isAuth: true,
+};
+
+export const INITIAL_ADDRESSES: Address[] = [
+  {
+    id: "addr-1",
+    name: "Kartly Demo User",
+    phone: "9999999999",
+    house: "Flat 402, Sai Vardhini Heights",
+    street: "Road No. 12, Banjara Hills",
+    city: "Hyderabad",
+    state: "Telangana",
+    pincode: "500034",
+    type: "home",
+    isDefault: true,
+  },
+  {
+    id: "addr-2",
+    name: "Kartly Demo User",
+    phone: "9999999999",
+    house: "Building 5B, Mindspace IT Park",
+    street: "HITEC City",
+    city: "Hyderabad",
+    state: "Telangana",
+    pincode: "500081",
+    type: "work",
+  },
+];
+
+export const AVAILABLE_COUPONS: Coupon[] = [
+  {
+    code: "WELCOME10",
+    discountType: "percent",
+    value: 10,
+    minOrderValue: 499,
+    maxDiscount: 1000,
+    description: "Get 10% OFF up to ₹1,000 on your order!",
+  },
+  {
+    code: "SAVE500",
+    discountType: "fixed",
+    value: 500,
+    minOrderValue: 1999,
+    description: "Flat ₹500 OFF on orders above ₹1,999",
+  },
+  {
+    code: "KARTLY100",
+    discountType: "fixed",
+    value: 100,
+    minOrderValue: 299,
+    description: "Flat ₹100 OFF on your cart",
+  },
+];
+
+export const INITIAL_ORDERS: Order[] = [
+  {
+    id: "KARTLY-20260812-00124",
+    date: "12 Aug 2026",
+    items: [
+      {
+        product: products[0],
+        qty: 1,
+        priceAtPurchase: products[0].price,
+      },
+    ],
+    subtotal: 13499,
+    discount: 5500,
+    deliveryCharge: 0,
+    couponDiscount: 500,
+    totalAmount: 12999,
+    address: INITIAL_ADDRESSES[0],
+    payment: {
+      method: "upi",
+      providerName: "PhonePe",
+      upiId: "demo@ybl",
+    },
+    status: "OUT_FOR_DELIVERY",
+    estimatedDelivery: "15 Aug 2026",
+    timeline: [
+      { status: "PLACED", date: "12 Aug 2026", time: "10:30 AM", completed: true },
+      { status: "CONFIRMED", date: "12 Aug 2026", time: "11:00 AM", completed: true },
+      { status: "PACKED", date: "12 Aug 2026", time: "04:15 PM", completed: true },
+      { status: "SHIPPED", date: "13 Aug 2026", time: "09:00 AM", completed: true },
+      { status: "OUT_FOR_DELIVERY", date: "13 Aug 2026", time: "02:30 PM", completed: true },
+      { status: "DELIVERED", date: "15 Aug 2026", time: "Pending", completed: false },
+    ],
+  },
+];
 
 export type DeliveryAddress = {
   fullName: string;
@@ -42,14 +143,43 @@ export type StoreState = {
   toggleWishlist: (p: Product) => void;
   recentlyViewed: string[];
   addRecentlyViewed: (id: string) => void;
-  user: string | null;
-  signIn: (phone: string) => void;
+  
+  // User Session & Auth
+  user: UserProfile | null;
+  signIn: (name: string, email: string, phone: string) => void;
   signOut: () => void;
+  authModalOpen: boolean;
+  authModalReason: string;
+  openAuthModal: (reason?: string) => void;
+  closeAuthModal: () => void;
+
+  // Address Management
+  addresses: Address[];
+  addAddress: (addr: Omit<Address, "id">) => void;
+  editAddress: (id: string, addr: Partial<Address>) => void;
+  deleteAddress: (id: string) => void;
+  setDefaultAddress: (id: string) => void;
+
+  // Orders Management
+  orders: Order[];
+  placeOrder: (payment: PaymentDetails, addressId: string) => Order | null;
+  cancelOrder: (orderId: string, reason: string) => void;
+  requestReturn: (orderId: string, reason: string) => void;
+  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
+  rateProduct: (orderId: string, rating: number, review: string) => void;
+  reorderItems: (orderId: string) => void;
+
+  // Coupon Management
+  appliedCoupon: Coupon | null;
+  applyCoupon: (code: string) => boolean;
+  removeCoupon: () => void;
+  couponDiscountAmount: number;
+
+  // Pincode
   pincode: string;
   setPincode: (v: string) => void;
   savedAddress: DeliveryAddress | null;
   setSavedAddress: (addr: DeliveryAddress | null) => void;
-  orders: any[];
 };
 
 const StoreContext = React.createContext<StoreState | null>(null);
@@ -114,42 +244,49 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [wishlist, setWishlist] = React.useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = React.useState<string[]>([]);
-  const [user, setUser] = React.useState<string | null>(null);
+  const [user, setUser] = React.useState<UserProfile | null>(DEFAULT_USER);
+  const [addresses, setAddresses] = React.useState<Address[]>(INITIAL_ADDRESSES);
+  const [orders, setOrders] = React.useState<Order[]>(INITIAL_ORDERS);
+  const [appliedCoupon, setAppliedCoupon] = React.useState<Coupon | null>(null);
   const [pincode, setPincode] = React.useState("560001");
   const [savedAddress, setSavedAddress] = React.useState<DeliveryAddress | null>(null);
+  const [authModalOpen, setAuthModalOpen] = React.useState(false);
+  const [authModalReason, setAuthModalReason] = React.useState("");
 
   React.useEffect(() => {
-    // Read cartItems safely from localStorage (supports both cartItems and antigravity_cart)
     const data1 = safeRead<any[]>("cartItems", []);
     const data2 = safeRead<any[]>("antigravity_cart", []);
-    const rawCart = Array.isArray(data1) && data1.length > 0 ? data1 : Array.isArray(data2) ? data2 : [];
+    const data3 = safeRead<any[]>("kartly.cart", []);
+    const rawCart = Array.isArray(data1) && data1.length > 0 ? data1 : Array.isArray(data2) && data2.length > 0 ? data2 : Array.isArray(data3) ? data3 : [];
     
-    // Normalize array items
     const normalizedCart: CartLine[] = rawCart
       .map(normalizeProductLine)
       .filter((item): item is CartLine => Boolean(item));
 
     setCart(normalizedCart);
 
-    // Read buyNowProduct safely from localStorage
     const savedBuyNow = safeRead<any>("buyNowProduct", null);
     if (savedBuyNow) {
       const norm = normalizeProductLine(savedBuyNow);
       if (norm) setBuyNowProduct(norm);
     }
 
-    setWishlist(safeRead<string[]>("antigravity_wishlist", []));
-    setRecentlyViewed(safeRead<string[]>("antigravity_recent", []));
-    setUser(safeRead<string | null>("antigravity_user", null));
-    setPincode(safeRead<string>("antigravity_pincode", "560001"));
+    setWishlist(safeRead<string[]>("antigravity_wishlist", safeRead<string[]>("kartly.wishlist", [])));
+    setRecentlyViewed(safeRead<string[]>("antigravity_recent", safeRead<string[]>("kartly.recentlyViewed", [])));
+    setUser(safeRead<UserProfile | null>("antigravity_user", safeRead<UserProfile | null>("kartly.user", DEFAULT_USER)));
+    setPincode(safeRead<string>("antigravity_pincode", safeRead<string>("kartly.pincode", "560001")));
     setSavedAddress(safeRead<DeliveryAddress | null>("antigravity_address", null));
+    setAddresses(safeRead<Address[]>("kartly.addresses", INITIAL_ADDRESSES));
+    setOrders(safeRead<Order[]>("kartly.orders", INITIAL_ORDERS));
   }, []);
 
+  // Save to localStorage
   React.useEffect(() => {
     try {
       if (typeof window !== "undefined") {
         window.localStorage.setItem("cartItems", JSON.stringify(cart));
         window.localStorage.setItem("antigravity_cart", JSON.stringify(cart));
+        window.localStorage.setItem("kartly.cart", JSON.stringify(cart));
       }
     } catch (e) {
       console.error("Failed to save cartItems to localStorage", e);
@@ -174,6 +311,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     try {
       if (typeof window !== "undefined") {
         window.localStorage.setItem("antigravity_wishlist", JSON.stringify(wishlist));
+        window.localStorage.setItem("kartly.wishlist", JSON.stringify(wishlist));
       }
     } catch {}
   }, [wishlist]);
@@ -182,6 +320,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     try {
       if (typeof window !== "undefined") {
         window.localStorage.setItem("antigravity_recent", JSON.stringify(recentlyViewed));
+        window.localStorage.setItem("kartly.recentlyViewed", JSON.stringify(recentlyViewed));
       }
     } catch {}
   }, [recentlyViewed]);
@@ -190,6 +329,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     try {
       if (typeof window !== "undefined") {
         window.localStorage.setItem("antigravity_user", JSON.stringify(user));
+        window.localStorage.setItem("kartly.user", JSON.stringify(user));
       }
     } catch {}
   }, [user]);
@@ -198,6 +338,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     try {
       if (typeof window !== "undefined") {
         window.localStorage.setItem("antigravity_pincode", JSON.stringify(pincode));
+        window.localStorage.setItem("kartly.pincode", JSON.stringify(pincode));
       }
     } catch {}
   }, [pincode]);
@@ -209,6 +350,43 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       }
     } catch {}
   }, [savedAddress]);
+
+  React.useEffect(() => {
+    try {
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("kartly.addresses", JSON.stringify(addresses));
+      }
+    } catch {}
+  }, [addresses]);
+
+  React.useEffect(() => {
+    try {
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("kartly.orders", JSON.stringify(orders));
+      }
+    } catch {}
+  }, [orders]);
+
+  const openAuthModal = React.useCallback((reason = "Please log in to continue.") => {
+    setAuthModalReason(reason);
+    setAuthModalOpen(true);
+  }, []);
+
+  const closeAuthModal = React.useCallback(() => {
+    setAuthModalOpen(false);
+  }, []);
+
+  const signIn = React.useCallback((name: string, email: string, phone: string) => {
+    const newUser: UserProfile = { name, email, phone, isAuth: true };
+    setUser(newUser);
+    setAuthModalOpen(false);
+    toast.success("Signed in successfully", { description: `Welcome back, ${name}!` });
+  }, []);
+
+  const signOut = React.useCallback(() => {
+    setUser(null);
+    toast("Signed out", { description: "You have logged out of Kartly." });
+  }, []);
 
   const visibleProducts = React.useMemo(() => {
     let result = products;
@@ -249,6 +427,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         if (typeof window !== "undefined") {
           window.localStorage.setItem("cartItems", JSON.stringify(updated));
           window.localStorage.setItem("antigravity_cart", JSON.stringify(updated));
+          window.localStorage.setItem("kartly.cart", JSON.stringify(updated));
         }
       } catch (e) {
         console.error("Error saving cartItems to localStorage", e);
@@ -303,6 +482,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (typeof window !== "undefined") {
         window.localStorage.removeItem("cartItems");
         window.localStorage.removeItem("antigravity_cart");
+        window.localStorage.removeItem("kartly.cart");
       }
     } catch (e) {
       console.error("Error clearing cartItems from localStorage", e);
@@ -328,14 +508,36 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  const signIn = React.useCallback((phone: string) => {
-    setUser(phone);
-    toast.success("Signed in", { description: `Welcome back, ${phone}` });
+  // Address Actions
+  const addAddress = React.useCallback((newAddr: Omit<Address, "id">) => {
+    const id = `addr-${Date.now()}`;
+    const fullAddr: Address = { ...newAddr, id };
+    setAddresses((prev) => {
+      if (newAddr.isDefault) {
+        return prev.map((a) => ({ ...a, isDefault: false })).concat(fullAddr);
+      }
+      return [...prev, fullAddr];
+    });
+    toast.success("Address added");
   }, []);
 
-  const signOut = React.useCallback(() => {
-    setUser(null);
-    toast("Signed out");
+  const editAddress = React.useCallback((id: string, updatedFields: Partial<Address>) => {
+    setAddresses((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, ...updatedFields } : a))
+    );
+    toast.success("Address updated");
+  }, []);
+
+  const deleteAddress = React.useCallback((id: string) => {
+    setAddresses((prev) => prev.filter((a) => a.id !== id));
+    toast("Address removed");
+  }, []);
+
+  const setDefaultAddress = React.useCallback((id: string) => {
+    setAddresses((prev) =>
+      prev.map((a) => ({ ...a, isDefault: a.id === id }))
+    );
+    toast.success("Default address updated");
   }, []);
 
   const safeCart = Array.isArray(cart) ? cart.filter((l) => l && l.product) : [];
@@ -348,6 +550,198 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   );
   const deliveryFee = cartSubtotal > 0 && cartSubtotal < 499 ? 40 : 0;
   const cartTotal = cartSubtotal + cartGstTotal + deliveryFee;
+
+  const couponDiscountAmount = React.useMemo(() => {
+    if (!appliedCoupon) return 0;
+    if (cartTotal < appliedCoupon.minOrderValue) return 0;
+    if (appliedCoupon.discountType === "percent") {
+      const calculated = (cartTotal * appliedCoupon.value) / 100;
+      return appliedCoupon.maxDiscount
+        ? Math.min(calculated, appliedCoupon.maxDiscount)
+        : calculated;
+    }
+    return appliedCoupon.value;
+  }, [appliedCoupon, cartTotal]);
+
+  const applyCoupon = React.useCallback(
+    (code: string) => {
+      const found = AVAILABLE_COUPONS.find(
+        (c) => c.code.toLowerCase() === code.trim().toLowerCase()
+      );
+      if (!found) {
+        toast.error("Invalid coupon code");
+        return false;
+      }
+      if (cartTotal < found.minOrderValue) {
+        toast.error(`Minimum order value for ${found.code} is ₹${found.minOrderValue}`);
+        return false;
+      }
+      setAppliedCoupon(found);
+      toast.success(`Coupon ${found.code} applied!`, { description: found.description });
+      return true;
+    },
+    [cartTotal]
+  );
+
+  const removeCoupon = React.useCallback(() => {
+    setAppliedCoupon(null);
+    toast("Coupon removed");
+  }, []);
+
+  // Place Order Action
+  const placeOrder = React.useCallback(
+    (payment: PaymentDetails, addressId: string): Order | null => {
+      if (!user || !user.isAuth) {
+        openAuthModal("Please log in to complete your purchase.");
+        return null;
+      }
+      if (safeCart.length === 0) {
+        toast.error("Your cart is empty!");
+        return null;
+      }
+
+      const selectedAddress =
+        addresses.find((a) => a.id === addressId) || addresses[0] || INITIAL_ADDRESSES[0];
+
+      const now = new Date();
+      const orderDate = now.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+
+      const deliveryDateObj = new Date(now.setDate(now.getDate() + 3));
+      const estDelivery = deliveryDateObj.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+
+      const randomNum = Math.floor(10000 + Math.random() * 90000);
+      const orderId = `KARTLY-${now.getFullYear()}${(now.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}${now.getDate().toString().padStart(2, "0")}-${randomNum}`;
+
+      const finalAmount = cartTotal - couponDiscountAmount;
+
+      const newOrder: Order = {
+        id: orderId,
+        date: orderDate,
+        items: safeCart.map((l) => ({
+          product: l.product,
+          qty: l.qty,
+          priceAtPurchase: l.product.price,
+        })),
+        subtotal: cartSubtotal,
+        discount: cartMrpTotal - cartSubtotal,
+        deliveryCharge: deliveryFee,
+        couponDiscount: couponDiscountAmount,
+        totalAmount: finalAmount,
+        address: selectedAddress,
+        payment,
+        status: "PLACED",
+        estimatedDelivery: estDelivery,
+        timeline: [
+          { status: "PLACED", date: orderDate, time: "Just now", completed: true },
+          { status: "CONFIRMED", date: orderDate, time: "Pending", completed: false },
+          { status: "PACKED", date: orderDate, time: "Pending", completed: false },
+          { status: "SHIPPED", date: estDelivery, time: "Pending", completed: false },
+          { status: "OUT_FOR_DELIVERY", date: estDelivery, time: "Pending", completed: false },
+          { status: "DELIVERED", date: estDelivery, time: "Pending", completed: false },
+        ],
+      };
+
+      setOrders((prev) => [newOrder, ...prev]);
+      clearCart();
+      setAppliedCoupon(null);
+      toast.success("Order placed successfully!", { description: `Order ID: ${orderId}` });
+      return newOrder;
+    },
+    [user, safeCart, addresses, cartTotal, cartMrpTotal, cartSubtotal, deliveryFee, couponDiscountAmount, openAuthModal, clearCart]
+  );
+
+  const cancelOrder = React.useCallback((orderId: string, reason: string) => {
+    const today = new Date().toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+
+    setOrders((prev) =>
+      prev.map((o) => {
+        if (o.id !== orderId) return o;
+        const updatedTimeline = o.timeline.map((t) =>
+          t.status === "CANCELLED" ? { ...t, completed: true, time: "Just now" } : t
+        );
+        return {
+          ...o,
+          status: "CANCELLED" as OrderStatus,
+          cancellationReason: reason,
+          cancelledAt: today,
+          refundStatus: o.payment.method !== "cod" ? "Refund Initiated" : undefined,
+          refundAmount: o.payment.method !== "cod" ? o.totalAmount : undefined,
+          timeline: updatedTimeline,
+        };
+      })
+    );
+    toast.success("Order cancelled", { description: `Order ${orderId} has been cancelled.` });
+  }, []);
+
+  const requestReturn = React.useCallback((orderId: string, reason: string) => {
+    setOrders((prev) =>
+      prev.map((o) =>
+        o.id === orderId
+          ? {
+              ...o,
+              status: "RETURN_REQUESTED" as OrderStatus,
+              returnReason: reason,
+              refundStatus: "Pending",
+            }
+          : o
+      )
+    );
+    toast.success("Return requested", { description: "We will arrange pickup within 48 hours." });
+  }, []);
+
+  const updateOrderStatus = React.useCallback((orderId: string, newStatus: OrderStatus) => {
+    setOrders((prev) =>
+      prev.map((o) => {
+        if (o.id !== orderId) return o;
+        
+        const statusOrder: OrderStatus[] = ["PLACED", "CONFIRMED", "PACKED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"];
+        const targetIdx = statusOrder.indexOf(newStatus);
+
+        const updatedTimeline = o.timeline.map((t) => {
+          const idx = statusOrder.indexOf(t.status);
+          if (idx !== -1 && targetIdx !== -1) {
+            return { ...t, completed: idx <= targetIdx };
+          }
+          return t;
+        });
+
+        return { ...o, status: newStatus, timeline: updatedTimeline };
+      })
+    );
+    toast.info(`Order ${orderId} status updated to ${newStatus}`);
+  }, []);
+
+  const rateProduct = React.useCallback((orderId: string, rating: number, review: string) => {
+    setOrders((prev) =>
+      prev.map((o) => (o.id === orderId ? { ...o, userRating: rating, userReview: review } : o))
+    );
+    toast.success("Thank you for your rating & review!");
+  }, []);
+
+  const reorderItems = React.useCallback((orderId: string) => {
+    const targetOrder = orders.find((o) => o.id === orderId);
+    if (!targetOrder) return;
+
+    targetOrder.items.forEach((item) => {
+      addToCart(item.product);
+    });
+    setCartOpen(true);
+    toast.success("Items reordered & added to cart!");
+  }, [orders, addToCart, setCartOpen]);
 
   const value: StoreState = {
     query,
@@ -379,11 +773,30 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     user,
     signIn,
     signOut,
+    authModalOpen,
+    authModalReason,
+    openAuthModal,
+    closeAuthModal,
+    addresses,
+    addAddress,
+    editAddress,
+    deleteAddress,
+    setDefaultAddress,
+    orders,
+    placeOrder,
+    cancelOrder,
+    requestReturn,
+    updateOrderStatus,
+    rateProduct,
+    reorderItems,
+    appliedCoupon,
+    applyCoupon,
+    removeCoupon,
+    couponDiscountAmount,
     pincode,
     setPincode,
     savedAddress,
     setSavedAddress,
-    orders: [],
   };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
@@ -406,3 +819,8 @@ export function getGstBreakdown(price: number, qty: number) {
   const totalPrice = itemPrice + gstAmount;
   return { rate, gstAmount, itemPrice, totalPrice };
 }
+
+export function getGstRate(price: number) {
+  return (price || 0) <= 1000 ? 5 : 12;
+}
+

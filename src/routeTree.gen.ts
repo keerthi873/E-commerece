@@ -22,9 +22,11 @@ import { Route as GroceryRouteImport } from './routes/grocery'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as MobilesRouteImport } from './routes/mobiles'
 import { Route as OrderSuccessRouteImport } from './routes/order-success'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PaymentRouteImport } from './routes/payment'
 import { Route as PortalsRouteImport } from './routes/portals'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as SellerRouteImport } from './routes/seller'
 import { Route as SportsRouteImport } from './routes/sports'
 import { Route as SuccessRouteImport } from './routes/success'
 import { Route as ToysRouteImport } from './routes/toys'
@@ -58,6 +60,7 @@ import { Route as HomeIndexRouteImport } from './routes/home.index'
 import { Route as HomeTypeRouteImport } from './routes/home.$type'
 import { Route as MobilesIndexRouteImport } from './routes/mobiles.index'
 import { Route as MobilesTypeRouteImport } from './routes/mobiles.$type'
+import { Route as OrdersIdRouteImport } from './routes/orders.$id'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 import { Route as SellerDashboardRouteImport } from './routes/seller.dashboard'
 import { Route as SellerLoginRouteImport } from './routes/seller.login'
@@ -156,6 +159,11 @@ const OrderSuccessRoute = OrderSuccessRouteImport.update({
   path: '/order-success',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PaymentRoute = PaymentRouteImport.update({
   id: '/payment',
   path: '/payment',
@@ -169,6 +177,11 @@ const PortalsRoute = PortalsRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SellerRoute = SellerRouteImport.update({
+  id: '/seller',
+  path: '/seller',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SportsRoute = SportsRouteImport.update({
@@ -336,20 +349,25 @@ const MobilesTypeRoute = MobilesTypeRouteImport.update({
   path: '/$type',
   getParentRoute: () => MobilesRoute,
 } as any)
+const OrdersIdRoute = OrdersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => OrdersRoute,
+} as any)
 const ProductIdRoute = ProductIdRouteImport.update({
   id: '/product/$id',
   path: '/product/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SellerDashboardRoute = SellerDashboardRouteImport.update({
-  id: '/seller/dashboard',
-  path: '/seller/dashboard',
-  getParentRoute: () => rootRouteImport,
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => SellerRoute,
 } as any)
 const SellerLoginRoute = SellerLoginRouteImport.update({
-  id: '/seller/login',
-  path: '/seller/login',
-  getParentRoute: () => rootRouteImport,
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => SellerRoute,
 } as any)
 const SportsIndexRoute = SportsIndexRouteImport.update({
   id: '/',
@@ -511,9 +529,11 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRouteWithChildren
   '/mobiles': typeof MobilesRouteWithChildren
   '/order-success': typeof OrderSuccessRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/payment': typeof PaymentRoute
   '/portals': typeof PortalsRoute
   '/search': typeof SearchRoute
+  '/seller': typeof SellerRouteWithChildren
   '/sports': typeof SportsRouteWithChildren
   '/success': typeof SuccessRoute
   '/toys': typeof ToysRouteWithChildren
@@ -539,6 +559,7 @@ export interface FileRoutesByFullPath {
   '/grocery/$type': typeof GroceryTypeRoute
   '/home/$type': typeof HomeTypeRoute
   '/mobiles/$type': typeof MobilesTypeRoute
+  '/orders/$id': typeof OrdersIdRoute
   '/product/$id': typeof ProductIdRoute
   '/seller/dashboard': typeof SellerDashboardRoute
   '/seller/login': typeof SellerLoginRoute
@@ -586,9 +607,11 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/furniture': typeof FurnitureRoute
   '/order-success': typeof OrderSuccessRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/payment': typeof PaymentRoute
   '/portals': typeof PortalsRoute
   '/search': typeof SearchRoute
+  '/seller': typeof SellerRouteWithChildren
   '/success': typeof SuccessRoute
   '/wishlist': typeof WishlistRoute
   '/admin/dashboard': typeof AdminDashboardRoute
@@ -608,6 +631,7 @@ export interface FileRoutesByTo {
   '/grocery/$type': typeof GroceryTypeRoute
   '/home/$type': typeof HomeTypeRoute
   '/mobiles/$type': typeof MobilesTypeRoute
+  '/orders/$id': typeof OrdersIdRoute
   '/product/$id': typeof ProductIdRoute
   '/seller/dashboard': typeof SellerDashboardRoute
   '/seller/login': typeof SellerLoginRoute
@@ -664,9 +688,11 @@ export interface FileRoutesById {
   '/home': typeof HomeRouteWithChildren
   '/mobiles': typeof MobilesRouteWithChildren
   '/order-success': typeof OrderSuccessRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/payment': typeof PaymentRoute
   '/portals': typeof PortalsRoute
   '/search': typeof SearchRoute
+  '/seller': typeof SellerRouteWithChildren
   '/sports': typeof SportsRouteWithChildren
   '/success': typeof SuccessRoute
   '/toys': typeof ToysRouteWithChildren
@@ -692,6 +718,7 @@ export interface FileRoutesById {
   '/grocery/$type': typeof GroceryTypeRoute
   '/home/$type': typeof HomeTypeRoute
   '/mobiles/$type': typeof MobilesTypeRoute
+  '/orders/$id': typeof OrdersIdRoute
   '/product/$id': typeof ProductIdRoute
   '/seller/dashboard': typeof SellerDashboardRoute
   '/seller/login': typeof SellerLoginRoute
@@ -749,9 +776,11 @@ export interface FileRouteTypes {
     | '/home'
     | '/mobiles'
     | '/order-success'
+    | '/orders'
     | '/payment'
     | '/portals'
     | '/search'
+    | '/seller'
     | '/sports'
     | '/success'
     | '/toys'
@@ -777,6 +806,7 @@ export interface FileRouteTypes {
     | '/grocery/$type'
     | '/home/$type'
     | '/mobiles/$type'
+    | '/orders/$id'
     | '/product/$id'
     | '/seller/dashboard'
     | '/seller/login'
@@ -824,9 +854,11 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/furniture'
     | '/order-success'
+    | '/orders'
     | '/payment'
     | '/portals'
     | '/search'
+    | '/seller'
     | '/success'
     | '/wishlist'
     | '/admin/dashboard'
@@ -846,6 +878,7 @@ export interface FileRouteTypes {
     | '/grocery/$type'
     | '/home/$type'
     | '/mobiles/$type'
+    | '/orders/$id'
     | '/product/$id'
     | '/seller/dashboard'
     | '/seller/login'
@@ -901,9 +934,11 @@ export interface FileRouteTypes {
     | '/home'
     | '/mobiles'
     | '/order-success'
+    | '/orders'
     | '/payment'
     | '/portals'
     | '/search'
+    | '/seller'
     | '/sports'
     | '/success'
     | '/toys'
@@ -929,6 +964,7 @@ export interface FileRouteTypes {
     | '/grocery/$type'
     | '/home/$type'
     | '/mobiles/$type'
+    | '/orders/$id'
     | '/product/$id'
     | '/seller/dashboard'
     | '/seller/login'
@@ -985,9 +1021,11 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRouteWithChildren
   MobilesRoute: typeof MobilesRouteWithChildren
   OrderSuccessRoute: typeof OrderSuccessRoute
+  OrdersRoute: typeof OrdersRouteWithChildren
   PaymentRoute: typeof PaymentRoute
   PortalsRoute: typeof PortalsRoute
   SearchRoute: typeof SearchRoute
+  SellerRoute: typeof SellerRouteWithChildren
   SportsRoute: typeof SportsRouteWithChildren
   SuccessRoute: typeof SuccessRoute
   ToysRoute: typeof ToysRouteWithChildren
@@ -1003,8 +1041,6 @@ export interface RootRouteChildren {
   FinanceDashboardRoute: typeof FinanceDashboardRoute
   FinanceLoginRoute: typeof FinanceLoginRoute
   ProductIdRoute: typeof ProductIdRoute
-  SellerDashboardRoute: typeof SellerDashboardRoute
-  SellerLoginRoute: typeof SellerLoginRoute
   SuperAdminDashboardRoute: typeof SuperAdminDashboardRoute
   SuperAdminLoginRoute: typeof SuperAdminLoginRoute
   SupportDashboardRoute: typeof SupportDashboardRoute
@@ -1107,6 +1143,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/payment': {
       id: '/payment'
       path: '/payment'
@@ -1126,6 +1169,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seller': {
+      id: '/seller'
+      path: '/seller'
+      fullPath: '/seller'
+      preLoaderRoute: typeof SellerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sports': {
@@ -1359,6 +1409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MobilesTypeRouteImport
       parentRoute: typeof MobilesRoute
     }
+    '/orders/$id': {
+      id: '/orders/$id'
+      path: '/$id'
+      fullPath: '/orders/$id'
+      preLoaderRoute: typeof OrdersIdRouteImport
+      parentRoute: typeof OrdersRoute
+    }
     '/product/$id': {
       id: '/product/$id'
       path: '/product/$id'
@@ -1368,17 +1425,17 @@ declare module '@tanstack/react-router' {
     }
     '/seller/dashboard': {
       id: '/seller/dashboard'
-      path: '/seller/dashboard'
+      path: '/dashboard'
       fullPath: '/seller/dashboard'
       preLoaderRoute: typeof SellerDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof SellerRoute
     }
     '/seller/login': {
       id: '/seller/login'
-      path: '/seller/login'
+      path: '/login'
       fullPath: '/seller/login'
       preLoaderRoute: typeof SellerLoginRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof SellerRoute
     }
     '/sports/': {
       id: '/sports/'
@@ -1752,6 +1809,30 @@ const MobilesRouteChildren: MobilesRouteChildren = {
 const MobilesRouteWithChildren =
   MobilesRoute._addFileChildren(MobilesRouteChildren)
 
+interface OrdersRouteChildren {
+  OrdersIdRoute: typeof OrdersIdRoute
+}
+
+const OrdersRouteChildren: OrdersRouteChildren = {
+  OrdersIdRoute: OrdersIdRoute,
+}
+
+const OrdersRouteWithChildren =
+  OrdersRoute._addFileChildren(OrdersRouteChildren)
+
+interface SellerRouteChildren {
+  SellerDashboardRoute: typeof SellerDashboardRoute
+  SellerLoginRoute: typeof SellerLoginRoute
+}
+
+const SellerRouteChildren: SellerRouteChildren = {
+  SellerDashboardRoute: SellerDashboardRoute,
+  SellerLoginRoute: SellerLoginRoute,
+}
+
+const SellerRouteWithChildren =
+  SellerRoute._addFileChildren(SellerRouteChildren)
+
 interface SportsRouteChildren {
   SportsTypeRoute: typeof SportsTypeRoute
   SportsIndexRoute: typeof SportsIndexRoute
@@ -1811,9 +1892,11 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRouteWithChildren,
   MobilesRoute: MobilesRouteWithChildren,
   OrderSuccessRoute: OrderSuccessRoute,
+  OrdersRoute: OrdersRouteWithChildren,
   PaymentRoute: PaymentRoute,
   PortalsRoute: PortalsRoute,
   SearchRoute: SearchRoute,
+  SellerRoute: SellerRouteWithChildren,
   SportsRoute: SportsRouteWithChildren,
   SuccessRoute: SuccessRoute,
   ToysRoute: ToysRouteWithChildren,
@@ -1829,8 +1912,6 @@ const rootRouteChildren: RootRouteChildren = {
   FinanceDashboardRoute: FinanceDashboardRoute,
   FinanceLoginRoute: FinanceLoginRoute,
   ProductIdRoute: ProductIdRoute,
-  SellerDashboardRoute: SellerDashboardRoute,
-  SellerLoginRoute: SellerLoginRoute,
   SuperAdminDashboardRoute: SuperAdminDashboardRoute,
   SuperAdminLoginRoute: SuperAdminLoginRoute,
   SupportDashboardRoute: SupportDashboardRoute,

@@ -177,14 +177,14 @@ const TOP_BRANDS = [
 ];
 
 export function ForYouSection() {
-  const { setCategory } = useStore();
+  const { setCategory, recentlyViewed } = useStore();
   const navigate = useNavigate();
 
   // Banner State
   const [activeBanner, setActiveBanner] = React.useState(0);
   const [touchStart, setTouchStart] = React.useState<number | null>(null);
 
-  // Countdown timer for Flash Sale (10. Limited Time Deals)
+  // Countdown timer for Flash Sale
   const [timeLeft, setTimeLeft] = React.useState({ hours: 4, minutes: 32, seconds: 15 });
 
   React.useEffect(() => {
@@ -219,49 +219,48 @@ export function ForYouSection() {
     setTouchStart(null);
   };
 
-  // DATA LOGIC FOR THE 10 SECTIONS
-  // 3. DEALS OF THE DAY (6-10 Products)
+  // DATA LOGIC FOR SECTIONS
+  const recentProducts = React.useMemo(() => {
+    if (!recentlyViewed || recentlyViewed.length === 0) return [];
+    return recentlyViewed
+      .map((id) => products.find((p) => p.id === id))
+      .filter((p): p is Product => Boolean(p))
+      .slice(0, 6);
+  }, [recentlyViewed]);
+
   const dealsOfTheDay = React.useMemo(() => {
     return products.filter((p) => p.isDealOfTheDay || p.mrp > p.price).slice(0, 8);
   }, []);
 
-  // 4. TRENDING PRODUCTS (Grid by rating/reviews)
   const trendingProducts = React.useMemo(() => {
     return [...products].sort((a, b) => b.rating - a.rating).slice(0, 6);
   }, []);
 
-  // 5. MOST SELLING ITEMS ("Best Seller")
   const mostSellingItems = React.useMemo(() => {
     return products.slice(2, 8);
   }, []);
 
-  // 6. RECOMMENDED FOR YOU (Mixed Products)
   const recommendedProducts = React.useMemo(() => {
     return products.slice(5, 11);
   }, []);
 
-  // 7. DISCOUNT ZONE (>40% discount)
   const discountZoneProducts = React.useMemo(() => {
     return products
       .filter((p) => Math.round(((p.mrp - p.price) / p.mrp) * 100) >= 40)
       .slice(0, 6);
   }, []);
 
-  // 8. NEW ARRIVALS
   const newArrivals = React.useMemo(() => {
     return products.slice(8, 14);
   }, []);
 
-  // 10. LIMITED TIME FLASH DEALS
   const flashSaleDeals = React.useMemo(() => {
     return products.slice(1, 7);
   }, []);
 
   return (
     <section className="mx-auto max-w-[1400px] px-4 py-4 space-y-12 font-sans">
-      {/* ========================================================
-          🎥 1. BIG BANNER CAROUSEL (SLIDER 350px-450px)
-         ======================================================== */}
+      {/* 1. BIG BANNER CAROUSEL */}
       <div
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -307,7 +306,6 @@ export function ForYouSection() {
           </div>
         ))}
 
-        {/* Carousel Prev & Next Arrows */}
         <button
           onClick={() => setActiveBanner((prev) => (prev - 1 + HOMEPAGE_BANNERS.length) % HOMEPAGE_BANNERS.length)}
           className="absolute left-4 top-1/2 -translate-y-1/2 z-30 size-11 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70 cursor-pointer"
@@ -321,7 +319,6 @@ export function ForYouSection() {
           <ChevronRight className="size-6" />
         </button>
 
-        {/* Pagination Dots */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2">
           {HOMEPAGE_BANNERS.map((_, i) => (
             <button
@@ -336,9 +333,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          🧭 2. QUICK CATEGORY ICONS (HORIZONTAL SCROLL)
-         ======================================================== */}
+      {/* 2. QUICK CATEGORY ICONS */}
       <div className="space-y-3">
         <div className="flex items-center justify-between border-b border-border pb-2">
           <h2 className="text-base md:text-lg font-black uppercase tracking-tight text-foreground flex items-center gap-2">
@@ -378,9 +373,33 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          ⚡ 3. DEALS OF THE DAY (HORIZONTAL SCROLL)
-         ======================================================== */}
+      {/* RECENTLY VIEWED (If Available) */}
+      {recentProducts.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between border-b border-border pb-3">
+            <div className="flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-indigo-600 text-white font-black">
+                <Clock className="size-5" />
+              </span>
+              <div>
+                <h2 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight">
+                  Recently Viewed
+                </h2>
+                <p className="text-xs text-muted-foreground font-medium">
+                  Products you browsed recently
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {recentProducts.map((p) => (
+              <ProductCard key={p.id} product={p} badgeLabel="RECENT" />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 3. DEALS OF THE DAY */}
       <div className="space-y-4 rounded-3xl border border-pink-200 dark:border-pink-900/60 bg-pink-50/50 dark:bg-pink-950/20 p-5 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-pink-200/80 dark:border-border pb-3">
           <div className="flex items-center gap-2">
@@ -404,7 +423,6 @@ export function ForYouSection() {
           </Link>
         </div>
 
-        {/* 6-10 Products Horizontal Scroll */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {dealsOfTheDay.map((p) => (
             <ProductCard key={p.id} product={p} badgeLabel="DEAL OF DAY" />
@@ -412,9 +430,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          🔥 4. TRENDING PRODUCTS (GRID LAYOUT)
-         ======================================================== */}
+      {/* 4. TRENDING PRODUCTS */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
@@ -439,9 +455,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          ⭐ 5. MOST SELLING ITEMS ("BEST SELLER")
-         ======================================================== */}
+      {/* 5. MOST SELLING ITEMS */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
@@ -466,9 +480,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          🎯 6. RECOMMENDED FOR YOU (MIXED PRODUCTS)
-         ======================================================== */}
+      {/* 6. RECOMMENDED FOR YOU */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
@@ -493,9 +505,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          💸 7. DISCOUNT ZONE (MIN 40% OFF)
-         ======================================================== */}
+      {/* 7. DISCOUNT ZONE */}
       <div className="space-y-4 rounded-3xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/40 dark:bg-amber-950/20 p-5 shadow-xs">
         <div className="flex items-center justify-between border-b border-amber-200/80 dark:border-border pb-3">
           <div className="flex items-center gap-2">
@@ -520,9 +530,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          🆕 8. NEW ARRIVALS
-         ======================================================== */}
+      {/* 8. NEW ARRIVALS */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
@@ -547,9 +555,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          🏆 9. TOP BRANDS STORE
-         ======================================================== */}
+      {/* 9. TOP BRANDS STORE */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
@@ -596,9 +602,7 @@ export function ForYouSection() {
         </div>
       </div>
 
-      {/* ========================================================
-          ⏳ 10. LIMITED TIME DEALS (FLASH SALE WITH COUNTDOWN)
-         ======================================================== */}
+      {/* 10. LIMITED TIME DEALS */}
       <div className="space-y-4 rounded-3xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/50 dark:bg-rose-950/30 p-6 shadow-md">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-rose-200/80 dark:border-border pb-4">
           <div className="flex items-center gap-3">
@@ -615,7 +619,6 @@ export function ForYouSection() {
             </div>
           </div>
 
-          {/* LIVE TICKING COUNTDOWN TIMER */}
           <div className="flex items-center gap-1.5 font-mono text-xs font-black text-white bg-rose-600 px-4 py-2 rounded-xl shadow-md">
             <span className="px-1.5 py-0.5 bg-black/30 rounded-md">
               {String(timeLeft.hours).padStart(2, "0")}h

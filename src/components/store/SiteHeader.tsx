@@ -11,6 +11,8 @@ import {
   Mic,
   Camera,
   Heart,
+  Package,
+  MapPinCheck,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
@@ -22,7 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { categories } from "./catalog";
-import { LoginDialog } from "./LoginDialog";
+import { AuthDialog } from "./AuthDialog";
 import { CameraSearchDialog } from "./CameraSearchDialog";
 import { useStore } from "./store-context";
 
@@ -36,12 +38,13 @@ export function SiteHeader() {
     setCartOpen,
     user,
     signOut,
+    openAuthModal,
     pincode,
     setPincode,
     wishlist,
+    orders,
   } = useStore();
 
-  const [loginOpen, setLoginOpen] = React.useState(false);
   const [cameraOpen, setCameraOpen] = React.useState(false);
   const [draft, setDraft] = React.useState(query);
   const [isListening, setIsListening] = React.useState(false);
@@ -77,9 +80,6 @@ export function SiteHeader() {
           setDraft(transcript);
           setQuery(transcript);
           toast.success("Voice Search", { description: `Searching for "${transcript}"` });
-          document
-            .getElementById("deals")
-            ?.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       };
 
@@ -111,7 +111,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-30">
       <div className="bg-brand text-primary-foreground">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-3 px-4 py-2.5">
-          <Link to="/" className="flex items-baseline gap-1.5">
+          <Link to="/" className="flex items-baseline gap-1.5 cursor-pointer">
             <span className="rounded-sm bg-accent px-2 py-0.5 text-lg font-black italic tracking-tight text-accent-foreground">
               Kartly
             </span>
@@ -123,9 +123,6 @@ export function SiteHeader() {
             onSubmit={(e) => {
               e.preventDefault();
               setQuery(draft);
-              document
-                .getElementById("deals")
-                ?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
           >
             <Search className="size-4 shrink-0 text-muted-foreground" />
@@ -144,8 +141,11 @@ export function SiteHeader() {
               <button
                 type="button"
                 aria-label="Clear search"
-                onClick={() => setQuery("")}
-                className="text-muted-foreground hover:text-foreground"
+                onClick={() => {
+                  setDraft("");
+                  setQuery("");
+                }}
+                className="text-muted-foreground hover:text-foreground cursor-pointer"
               >
                 <X className="size-4" />
               </button>
@@ -156,7 +156,7 @@ export function SiteHeader() {
               type="button"
               aria-label="Voice search"
               onClick={handleVoiceSearch}
-              className={`text-muted-foreground hover:text-foreground transition-colors ${
+              className={`text-muted-foreground hover:text-foreground transition-colors cursor-pointer ${
                 isListening ? "text-brand animate-pulse" : ""
               }`}
               title="Voice Search"
@@ -169,7 +169,7 @@ export function SiteHeader() {
               type="button"
               aria-label="Camera search"
               onClick={() => setCameraOpen(true)}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               title="Image Search"
             >
               <Camera className="size-4" />
@@ -177,37 +177,37 @@ export function SiteHeader() {
           </form>
 
           <nav className="flex items-center gap-5 text-sm font-medium">
-            {user ? (
+            {user && user.isAuth ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-sm px-3 py-1.5 transition-colors hover:bg-brand-deep">
+                <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-sm px-3 py-1.5 transition-colors hover:bg-brand-deep cursor-pointer">
                   <UserRound className="size-4" />
-                  {user}
+                  <span className="max-w-[120px] truncate">{user.name}</span>
                   <ChevronDown className="size-3.5 opacity-70" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem onClick={() => toast("No orders yet")}>
-                    My orders
+                <DropdownMenuContent align="end" className="w-52">
+                  <DropdownMenuItem asChild>
+                    <Link to="/orders" className="flex items-center gap-2 cursor-pointer w-full">
+                      <Package className="size-4 text-brand" />
+                      <span>My Orders ({orders.length})</span>
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() =>
-                      toast(`Wishlist: ${wishlist.length} item(s)`, {
-                        description: "Tap the heart on any product to save it.",
-                      })
-                    }
-                  >
-                    Wishlist ({wishlist.length})
+                  <DropdownMenuItem asChild>
+                    <Link to="/wishlist" className="flex items-center gap-2 cursor-pointer w-full">
+                      <Heart className="size-4 text-brand" />
+                      <span>Wishlist ({wishlist.length})</span>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={signOut}>
+                  <DropdownMenuItem onClick={signOut} className="cursor-pointer text-red-600 dark:text-red-400">
                     <LogOut className="size-4" />
-                    Logout
+                    <span>Logout</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <button
-                onClick={() => setLoginOpen(true)}
-                className="flex items-center gap-1.5 rounded-sm px-3 py-1.5 transition-colors hover:bg-brand-deep"
+                onClick={() => openAuthModal("Sign in to manage orders, wishlist, and profile.")}
+                className="flex items-center gap-1.5 rounded-sm px-3 py-1.5 transition-colors hover:bg-brand-deep cursor-pointer"
               >
                 <UserRound className="size-4" />
                 Login
@@ -273,14 +273,22 @@ export function SiteHeader() {
             </DropdownMenu>
 
             <Link
+              to="/seller"
+              className="hidden items-center gap-1.5 transition-opacity hover:opacity-80 sm:flex cursor-pointer"
+            >
+              <Store className="size-4" />
+              Become a Seller
+            </Link>
+
+            <Link
               to="/wishlist"
-              className="relative flex items-center gap-1.5 transition-opacity hover:opacity-80"
+              className="relative flex items-center gap-1.5 transition-opacity hover:opacity-80 cursor-pointer"
               title="View Wishlist"
             >
               <Heart className="size-4" />
               Wishlist
               {wishlist.length > 0 && (
-                <span className="absolute -right-3 -top-2 min-w-4 rounded-full bg-accent px-1 text-[10px] font-bold leading-4 text-accent-foreground">
+                <span className="absolute -right-3 -top-2 min-w-4 rounded-full bg-accent px-1 text-[10px] font-bold leading-4 text-accent-foreground text-center">
                   {wishlist.length}
                 </span>
               )}
@@ -293,7 +301,7 @@ export function SiteHeader() {
               <ShoppingCart className="size-4" />
               Cart
               {cartCount > 0 && (
-                <span className="absolute -right-3 -top-2 min-w-4 rounded-full bg-accent px-1 text-[10px] font-bold leading-4 text-accent-foreground">
+                <span className="absolute -right-3 -top-2 min-w-4 rounded-full bg-accent px-1 text-[10px] font-bold leading-4 text-accent-foreground text-center">
                   {cartCount}
                 </span>
               )}
@@ -309,7 +317,7 @@ export function SiteHeader() {
               maxLength={6}
               value={pincode}
               onChange={(e) => setPincode(e.target.value.replace(/\D/g, ""))}
-              className="w-14 bg-transparent font-semibold underline decoration-dotted outline-none"
+              className="w-14 bg-transparent font-semibold underline decoration-dotted outline-none text-accent"
             />
           </p>
         </div>
@@ -348,12 +356,10 @@ export function SiteHeader() {
               <li key={c}>
                 <Link
                   to={targetPath}
-                  onClick={() => {
-                    setCategory(c);
-                  }}
+                  onClick={() => setCategory(c)}
                   aria-current={isSelected ? "true" : undefined}
                   className={
-                    "inline-block whitespace-nowrap border-b-2 px-3.5 py-3 transition-colors " +
+                    "inline-block whitespace-nowrap border-b-2 px-3.5 py-3 transition-colors cursor-pointer " +
                     (isSelected
                       ? "border-brand font-bold text-brand"
                       : "border-transparent hover:border-accent hover:text-foreground")
@@ -367,7 +373,7 @@ export function SiteHeader() {
         </ul>
       </div>
 
-      <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
+      <AuthDialog />
       <CameraSearchDialog open={cameraOpen} onOpenChange={setCameraOpen} />
     </header>
   );
